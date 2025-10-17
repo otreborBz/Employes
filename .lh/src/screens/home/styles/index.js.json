@@ -1,0 +1,66 @@
+{
+    "sourceFile": "src/screens/home/styles/index.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 12,
+            "patches": [
+                {
+                    "date": 1760462399674,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1760462405885,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,1 @@\n+import { }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1760462414235,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,2 @@\n+import { StyleSheet } from \"react-native\";\n+\n"
+                },
+                {
+                    "date": 1760462422075,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,2 @@\n+import { StyleSheet, Text } from \"react-native\";\n+\n"
+                },
+                {
+                    "date": 1760462448794,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,4 @@\n+import { StyleSheet, Text, View} from \"react-native\";\n+\n+\n+export de\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1760462454915,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,4 @@\n+import { StyleSheet, Text, View} from \"react-native\";\n+\n+\n+export default function \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1760462462294,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,13 +1,5 @@\n import { StyleSheet, Text, View} from \"react-native\";\n \n \n-export default function \n-import { StyleSheet, Text, View} from \"react-native\";\n-\n-\n-export de\n-import { StyleSheet, Text } from \"react-native\";\n-\n-import { StyleSheet } from \"react-native\";\n-\n-import { }\n\\ No newline at end of file\n+export default function Home() { \n+  \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1760462469295,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,12 @@\n import { StyleSheet, Text, View} from \"react-native\";\n \n \n export default function Home() { \n-  \n\\ No newline at end of file\n+  return (\n+    <View style={styles.container}>\n+      <Text>Home</Text>\n+    </View>\n+  );\n+}\n+\n+const styles = StyleSheet.create()\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1760462476925,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,5 +8,7 @@\n     </View>\n   );\n }\n \n-const styles = StyleSheet.create()\n\\ No newline at end of file\n+const styles = StyleSheet.create(\n+  con\n+)\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1760462481981,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,19 @@\n+import { StyleSheet, Text, View} from \"react-native\";\n+\n+\n+export default function Home() { \n+  return (\n+    <View style={styles.container}>\n+      <Text>Home</Text>\n+    </View>\n+  );\n+}\n+\n+const styles = StyleSheet.create(\n+  container: {\n+    flex: 1,\n+    backgroundColor: '#fff',\n+    alignItems: 'center',\n+    justifyContent: 'center',\n+  },\n+)\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1760462491993,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,4 +16,6 @@\n     flex: 1,\n     backgroundColor: '#fff',\n     alignItems: 'center',\n     justifyContent: 'center',\n+  },\n+)\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1760462497481,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,5 +9,13 @@\n   );\n }\n \n const styles = StyleSheet.create({\n-  con\n\\ No newline at end of file\n+  container: {\n+    flex: 1,\n+    backgroundColor: '#fff',\n+    alignItems: 'center',\n+    justifyContent: 'center',\n+  },\n+}\n+\n+)\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1760561203607,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,166 @@\n+import { StyleSheet } from \"react-native\";\n+\n+const styles = StyleSheet.create({\n+  container: {\n+    flex: 1\n+  },\n+  scrollContainer: {\n+    paddingHorizontal: 20,\n+    paddingBottom: 50,\n+    paddingTop: Constants.statusBarHeight,\n+  },\n+  greetingContainer: {\n+    flexDirection: 'row',\n+    justifyContent: 'space-between',\n+    alignItems: 'center',\n+  },\n+  greeting: {\n+    fontSize: 24,\n+    fontWeight: '700',\n+    color: '#1E2A38',\n+  },\n+  sectionTitle: { fontSize: 18, fontWeight: '600', color: '#1E2A38', marginTop: 20, marginBottom: 10 },\n+\n+  // 🔹 Corrigido: substituição do gap\n+  cardsContainer: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' },\n+  card: {\n+    backgroundColor: '#fff',\n+    width: '31%',\n+    marginBottom: 10,\n+    padding: 15,\n+    borderRadius: 12,\n+    justifyContent: 'space-between',\n+    borderWidth: 1,\n+    borderColor: '#E2E8F0',\n+    minHeight: 110,\n+  },\n+\n+  cardTitle: { fontSize: 14, color: '#555', marginTop: 8, textAlign: 'center' },\n+  cardNumber: { fontSize: 22, fontWeight: '700', color: '#1E2A38', marginTop: 4, textAlign: 'center' },\n+  cardSmall: { fontSize: 14, fontWeight: '600', color: '#1E2A38', marginTop: 4, textAlign: 'center' },\n+\n+  setoresContainer: { flexDirection: 'row', flexWrap: 'wrap', marginHorizontal: -4 },\n+  setorBadge: { backgroundColor: '#E8F1FF', paddingVertical: 6, paddingHorizontal: 12, borderRadius: 15, margin: 4 },\n+  setorText: { color: '#007BFF', fontWeight: '600' },\n+\n+  listItem: {\n+    flexDirection: 'row',\n+    alignItems: 'center',\n+    backgroundColor: '#fff',\n+    borderRadius: 10,\n+    padding: 12,\n+    marginBottom: 8,\n+    borderWidth: 1,\n+    borderColor: '#E2E8F0',\n+  },\n+  listItemName: { fontSize: 16, fontWeight: '600', color: '#1E2A38' },\n+  listItemDetails: { fontSize: 14, color: '#555' },\n+  emptyText: { textAlign: 'center', color: '#777', fontSize: 15, marginVertical: 10 },\n+\n+  actionsContainer: { flexDirection: 'row', justifyContent: 'space-around', marginTop: 10 },\n+  actionButton: {\n+    flexDirection: 'row',\n+    alignItems: 'center',\n+    backgroundColor: '#007BFF',\n+    paddingVertical: 12,\n+    paddingHorizontal: 20,\n+    borderRadius: 10,\n+  },\n+  actionText: { color: '#fff', fontSize: 16, fontWeight: '600', marginLeft: 6 },\n+\n+  modalContainer: { flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.5)' },\n+  modalView: {\n+    width: '90%',\n+    backgroundColor: '#fff',\n+    borderRadius: 20,\n+    paddingHorizontal: 25,\n+    paddingVertical: 30,\n+    alignItems: 'center',\n+    paddingTop: 45, // Espaço para o botão de fechar\n+  },\n+  modalTitle: { fontSize: 20, fontWeight: '700', marginBottom: 20, color: '#1E2A38' },\n+  inputContainer: {\n+    flexDirection: 'row',\n+    alignItems: 'center',\n+    width: '100%',\n+    height: 50,\n+    backgroundColor: '#F9FAFB',\n+    borderWidth: 1,\n+    borderColor: '#D1D9E6',\n+    borderRadius: 10,\n+    marginBottom: 12,\n+    paddingHorizontal: 10,\n+  },\n+  inputIcon: {\n+    marginRight: 8,\n+  },\n+  modalInput: {\n+    flex: 1,\n+    fontSize: 16,\n+    color: '#333',\n+  },\n+  selectorButton: {\n+    justifyContent: 'space-between'\n+  },\n+  modalButton: {\n+    flexDirection: 'row',\n+    backgroundColor: '#007BFF',\n+    paddingVertical: 12,\n+    paddingHorizontal: 20,\n+    borderRadius: 10,\n+    alignItems: 'center',\n+    justifyContent: 'center',\n+    width: '100%',\n+    marginTop: 10,\n+  },\n+  modalButtonText: { color: '#fff', fontWeight: '700', fontSize: 16 },\n+  cancelButton: { marginTop: 15 },\n+  cancelText: { color: '#007BFF', fontWeight: '600', fontSize: 15 },\n+  closeButton: {\n+    position: 'absolute',\n+    top: 15,\n+    right: 15,\n+    zIndex: 1,\n+  },\n+  inputText: { fontSize: 16, color: '#333' },\n+  placeholderText: { fontSize: 16, color: '#999' },\n+  setorInputContainer: { flexDirection: 'row', alignItems: 'center', marginBottom: 15, width: '100%' },\n+  setorInput: { flex: 1, height: 44, backgroundColor: '#F9FAFB', borderWidth: 1, borderColor: '#D1D9E6', borderRadius: 8, paddingHorizontal: 10 },\n+  addSetorButton: { marginLeft: 10 },\n+  setorOption: { width: '100%', paddingVertical: 15, paddingHorizontal: 5, borderBottomWidth: 1, borderBottomColor: '#eee', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },\n+  setorOptionText: { fontSize: 16, color: '#333', flex: 1 },\n+  // Estilos para os seletores de setor no MODAL\n+  setoresModalContainer: {\n+    flexDirection: 'row',\n+    flexWrap: 'wrap',\n+    width: '100%',\n+    justifyContent: 'center',\n+    marginBottom: 15,\n+    marginTop: 5,\n+  },\n+  setorBadgeModal: {\n+    backgroundColor: '#e9ecef',\n+    paddingVertical: 6,\n+    paddingHorizontal: 12, borderRadius: 16, margin: 4,\n+  },\n+  setorBadgeModalText: { color: '#495057', fontWeight: '500' },\n+  // Estilos para o modal de detalhes do funcionário\n+  detailsContainer: { width: '100%', marginTop: 10 },\n+  detailRow: {\n+    flexDirection: 'row',\n+    alignItems: 'center',\n+    backgroundColor: '#F9FAFB',\n+    padding: 15,\n+    borderRadius: 10,\n+    marginBottom: 10,\n+  },\n+  detailIcon: {\n+    marginRight: 15,\n+  },\n+  detailLabel: {\n+    fontSize: 12, color: '#666',\n+  },\n+  detailValue: { fontSize: 16, color: '#1E2A38', fontWeight: '600' },\n+});\n+\n+export default styles;\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1760462399674,
+            "name": "Commit-0",
+            "content": ""
+        }
+    ]
+}

@@ -1,0 +1,26 @@
+{
+    "sourceFile": "app.json",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1760656858221,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1760656872324,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n {\n   \"expo\": {\n     \"name\": \"Employes\",\n     \"slug\": \"Employes\",\n-    \"version\": \"1.1.0\",\n+    \"version\": \"1.0.0\",\n     \"orientation\": \"portrait\",\n     \"icon\": \"./assets/icon.png\",\n     \"userInterfaceStyle\": \"light\",\n     \"newArchEnabled\": true,\n"
+                },
+                {
+                    "date": 1760656969388,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n {\n   \"expo\": {\n     \"name\": \"Employes\",\n     \"slug\": \"Employes\",\n-    \"version\": \"1.0.0\",\n+    \"version\": \"2.0.0\",\n     \"orientation\": \"portrait\",\n     \"icon\": \"./assets/icon.png\",\n     \"userInterfaceStyle\": \"light\",\n     \"newArchEnabled\": true,\n"
+                }
+            ],
+            "date": 1760656858221,
+            "name": "Commit-0",
+            "content": "{\n  \"expo\": {\n    \"name\": \"Employes\",\n    \"slug\": \"Employes\",\n    \"version\": \"1.1.0\",\n    \"orientation\": \"portrait\",\n    \"icon\": \"./assets/icon.png\",\n    \"userInterfaceStyle\": \"light\",\n    \"newArchEnabled\": true,\n    \"splash\": {\n      \"image\": \"./assets/splash-icon.png\",\n      \"resizeMode\": \"contain\",\n      \"backgroundColor\": \"#ffffff\"\n    },\n    \"ios\": {\n      \"supportsTablet\": true\n    },\n    \"android\": {\n      \"adaptiveIcon\": {\n        \"foregroundImage\": \"./assets/adaptive-icon.png\",\n        \"backgroundColor\": \"#ffffff\"\n      },\n      \"edgeToEdgeEnabled\": true,\n      \"package\": \"com.otrebor.Employes\"\n    },\n    \"web\": {\n      \"favicon\": \"./assets/favicon.png\"\n    },\n    \"plugins\": [\n      \"expo-sqlite\"\n    ],\n    \"extra\": {\n      \"eas\": {\n        \"projectId\": \"5d120eab-55d4-4e07-a805-af03fde56ef2\"\n      }\n    }\n  }\n}\n"
+        }
+    ]
+}

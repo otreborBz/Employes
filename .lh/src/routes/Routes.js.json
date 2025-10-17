@@ -1,0 +1,50 @@
+{
+    "sourceFile": "src/routes/Routes.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 8,
+            "patches": [
+                {
+                    "date": 1760461996016,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1760462001957,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,7 @@\n+import React from 'react';\n+import { View, Text, StyleSheet } from 'react-native';\n+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';\n+\n+import Home from  '@/screens/home/Home';\n+\n+export de\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1760462008489,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,7 @@\n+import React from 'react';\n+import { View, Text, StyleSheet } from 'react-native';\n+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';\n+\n+import Home from  '@/screens/home/Home';\n+\n+export default function\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1760462014186,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,7 @@\n+import React from 'react';\n+import { View, Text, StyleSheet } from 'react-native';\n+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';\n+\n+import Home from  '@/screens/home/Home';\n+\n+export default function Routes()\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1760462019360,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,24 +3,5 @@\n import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';\n \n import Home from  '@/screens/home/Home';\n \n-export default function Routes()\n-import React from 'react';\n-import { View, Text, StyleSheet } from 'react-native';\n-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';\n-\n-import Home from  '@/screens/home/Home';\n-\n-export default function\n-import React from 'react';\n-import { View, Text, StyleSheet } from 'react-native';\n-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';\n-\n-import Home from  '@/screens/home/Home';\n-\n-export de\n-import React from 'react';\n-import { View, Text, StyleSheet } from 'react-native';\n-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';\n-\n-import Home from  '@/screens/home/Home';\n\\ No newline at end of file\n+export default function Routes(){}\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1760462025873,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,9 @@\n+import React from 'react';\n+import { View, Text, StyleSheet } from 'react-native';\n+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';\n+\n+import Home from  '@/screens/home/Home';\n+\n+export default function Routes(){\n+  retunr\n+}\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1760462036699,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,13 @@\n+import React from 'react';\n+import { View, Text, StyleSheet } from 'react-native';\n+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';\n+\n+import Home from  '@/screens/home/Home';\n+\n+\n+\n+export default function Routes(){\n+  return(\n+\n+  )\n+}\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1760462042227,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';\n \n import Home from  '@/screens/home/Home';\n \n-const \n+const Tab\n \n export default function Routes(){\n   return(\n \n"
+                },
+                {
+                    "date": 1760462047713,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,13 @@\n+import React from 'react';\n+import { View, Text, StyleSheet } from 'react-native';\n+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';\n+\n+import Home from  '@/screens/home/Home';\n+\n+const Tab = createBottomTabNavigator();\n+\n+export default function Routes(){\n+  return(\n+\n+  )\n+}\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1760461996016,
+            "name": "Commit-0",
+            "content": "import React from 'react';\nimport { View, Text, StyleSheet } from 'react-native';\nimport { createBottomTabNavigator } from '@react-navigation/bottom-tabs';\n\nimport Home from  '@/screens/home/Home';\n\n"
+        }
+    ]
+}

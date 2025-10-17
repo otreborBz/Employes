@@ -1,0 +1,30 @@
+{
+    "sourceFile": "src/components/Alert.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 3,
+            "patches": [
+                {
+                    "date": 1760476997011,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1760477002361,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,4 +1,4 @@\n \n \n \n-export de\n\\ No newline at end of file\n+export default function \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1760477009131,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,4 +1,6 @@\n \n \n \n-export default function Alert()\n\\ No newline at end of file\n+export default function Alert(){\n+  \n+}\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1760477015104,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,8 @@\n+\n+\n+\n+export default function Alert(){\n+  return(\n+    \n+  )\n+}\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1760476997011,
+            "name": "Commit-0",
+            "content": "\n\n\nexport de"
+        }
+    ]
+}

@@ -1,0 +1,26 @@
+{
+    "sourceFile": "src/components/updateModal/styles/index.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1760654985846,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1760654992730,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,1 @@\n+import { StyleSheet } from \"react-native\";\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1760654999427,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,62 @@\n+import { StyleSheet } from \"react-native\";  \n+\n+const styles = StyleSheet.create({\n+  overlay: {\n+    flex: 1,\n+    backgroundColor: 'rgba(0,0,0,0.7)',\n+    justifyContent: 'center',\n+    alignItems: 'center',\n+  },\n+  container: {\n+    width: '85%',\n+    backgroundColor: '#fff',\n+    borderRadius: 16,\n+    padding: 20,\n+    alignItems: 'center',\n+  },\n+  title: {\n+    fontSize: 20,\n+    fontWeight: 'bold',\n+    color: '#333',\n+    marginTop: 10,\n+    textAlign: 'center',\n+  },\n+  subtitle: {\n+    fontSize: 16,\n+    color: '#666',\n+    marginBottom: 10,\n+  },\n+  changelog: {\n+    fontSize: 15,\n+    color: '#444',\n+    textAlign: 'center',\n+    marginVertical: 10,\n+  },\n+  buttons: {\n+    flexDirection: 'row',\n+    marginTop: 15,\n+  },\n+  button: {\n+    flex: 1,\n+    marginHorizontal: 5,\n+    borderRadius: 8,\n+    paddingVertical: 10,\n+    alignItems: 'center',\n+  },\n+  later: {\n+    backgroundColor: '#ccc',\n+  },\n+  update: {\n+    backgroundColor: '#4CAF50',\n+  },\n+  laterText: {\n+    color: '#333',\n+    fontWeight: '600',\n+  },\n+  updateText: {\n+    color: '#fff',\n+    fontWeight: '600',\n+  },\n+});\n+\n+export default styles;\n"
+                }
+            ],
+            "date": 1760654985846,
+            "name": "Commit-0",
+            "content": "import "
+        }
+    ]
+}

@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/screens/home/CustomTabBarButton.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1760567089468,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1760567089468,
+            "name": "Commit-0",
+            "content": "import { Ionicons } from '@expo/vector-icons';\nimport { useNavigation } from '@react-navigation/native';\nimport { StyleSheet, TouchableOpacity, View } from 'react-native';\n\nexport default function CustomTabBarButton() {\n  const navigation = useNavigation();\n\n  const handlePress = () => {\n    // Navega para a tela de funcionários e passa um parâmetro para abrir o modal\n    navigation.navigate('Employes', { openAddModal: true });\n  };\n\n  return (\n    <TouchableOpacity\n      style={styles.container}\n      onPress={handlePress}\n    >\n      <View style={styles.button}>\n        <Ionicons name=\"add\" size={30} color=\"#fff\" />\n      </View>\n    </TouchableOpacity>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    top: -30,\n    justifyContent: 'center',\n    alignItems: 'center',\n  },\n  button: {\n    width: 70,\n    height: 70,\n    borderRadius: 35,\n    backgroundColor: '#007bff',\n    justifyContent: 'center',\n    alignItems: 'center',\n    elevation: 8,\n    shadowColor: '#007bff',\n    shadowOffset: { width: 0, height: 4 },\n    shadowOpacity: 0.3,\n    shadowRadius: 4,\n    borderWidth: 3,\n    borderColor: '#fff'\n  },\n});"
+        }
+    ]
+}

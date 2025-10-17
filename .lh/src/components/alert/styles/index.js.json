@@ -1,0 +1,30 @@
+{
+    "sourceFile": "src/components/alert/styles/index.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 3,
+            "patches": [
+                {
+                    "date": 1760560538546,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1760560544324,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,1 @@\n+import { StyleSheet } from \"react-native\";\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1760560551040,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,2 @@\n+import { StyleSheet } from \"react-native\";  \n+\n"
+                },
+                {
+                    "date": 1760560558718,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,66 @@\n+import { StyleSheet } from \"react-native\";  \n+\n+const styles = StyleSheet.create({\n+  modalContainer: {\n+    flex: 1,\n+    justifyContent: 'center',\n+    alignItems: 'center',\n+    backgroundColor: 'rgba(0,0,0,0.5)',\n+  },\n+  alertBox: {\n+    width: '85%',\n+    backgroundColor: '#fff',\n+    borderRadius: 20,\n+    padding: 25,\n+    alignItems: 'center',\n+    shadowColor: '#000',\n+    shadowOffset: { width: 0, height: 2 },\n+    shadowOpacity: 0.25,\n+    shadowRadius: 4,\n+    elevation: 5,\n+  },\n+  icon: {\n+    marginBottom: 15,\n+  },\n+  title: {\n+    fontSize: 20,\n+    fontWeight: '700',\n+    color: '#1E2A38',\n+    textAlign: 'center',\n+    marginBottom: 8,\n+  },\n+  message: {\n+    fontSize: 16,\n+    color: '#555',\n+    textAlign: 'center',\n+    marginBottom: 25,\n+  },\n+  buttonContainer: {\n+    flexDirection: 'row',\n+    justifyContent: 'center',\n+    width: '100%',\n+  },\n+  button: {\n+    flex: 1,\n+    backgroundColor: '#007bff',\n+    paddingVertical: 12,\n+    borderRadius: 10,\n+    marginHorizontal: 5,\n+    alignItems: 'center',\n+  },\n+  destructiveButton: {\n+    backgroundColor: '#dc3545',\n+  },\n+  cancelButton: {\n+    backgroundColor: '#f0f0f0',\n+    borderWidth: 1,\n+    borderColor: '#ddd',\n+  },\n+  buttonText: {\n+    color: '#fff',\n+    fontSize: 16,\n+    fontWeight: '600',\n+  },\n+});\n+\n+export default styles;\n"
+                }
+            ],
+            "date": 1760560538546,
+            "name": "Commit-0",
+            "content": "import "
+        }
+    ]
+}

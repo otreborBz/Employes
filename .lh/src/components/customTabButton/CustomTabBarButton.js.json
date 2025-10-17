@@ -1,0 +1,38 @@
+{
+    "sourceFile": "src/components/customTabButton/CustomTabBarButton.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 5,
+            "patches": [
+                {
+                    "date": 1760649277199,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1760649297503,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,8 @@\n import { Ionicons } from '@expo/vector-icons';\n import { useNavigation } from '@react-navigation/native';\n import { StyleSheet, TouchableOpacity, View } from 'react-native';\n+import \n \n export default function CustomTabBarButton() {\n   const navigation = useNavigation();\n \n"
+                },
+                {
+                    "date": 1760649305484,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,26 @@\n+import { Ionicons } from '@expo/vector-icons';\n+import { useNavigation } from '@react-navigation/native';\n+import {TouchableOpacity, View } from 'react-native';\n+import styles from './styles';\n+\n+\n+export default function CustomTabBarButton() {\n+  const navigation = useNavigation();\n+\n+  const handlePress = () => {\n+    // Navega para a pilha 'Employes' e, dentro dela, para a tela 'AddEditEmployee'\n+    navigation.navigate('Employes', { screen: 'AddEditEmployee' });\n+  };\n+\n+  return (\n+    <TouchableOpacity\n+      style={styles.container}\n+      onPress={handlePress}\n+    >\n+      <View style={styles.button}>\n+        <Ionicons name=\"add\" size={30} color=\"#fff\" />\n+      </View>\n+    </TouchableOpacity>\n+  );\n+}\n+\n"
+                },
+                {
+                    "date": 1760649314220,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,8 @@\n export default function CustomTabBarButton() {\n   const navigation = useNavigation();\n \n   const handlePress = () => {\n-    // Navega para a pilha 'Employes' e, dentro dela, para a tela 'AddEditEmployee'\n     navigation.navigate('Employes', { screen: 'AddEditEmployee' });\n   };\n \n   return (\n"
+                },
+                {
+                    "date": 1760649873962,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,38 +1,15 @@\n import { Ionicons } from '@expo/vector-icons';\n import { useNavigation } from '@react-navigation/native';\n import {TouchableOpacity, View } from 'react-native';\n import styles from './styles';\n+import { StyleSheet, TouchableOpacity, View } from 'react-native';\n \n \n export default function CustomTabBarButton() {\n   const navigation = useNavigation();\n \n   const handlePress = () => {\n-    navigation.navigate('Employes', { screen: 'AddEditEmployee' });\n-  };\n-\n-  return (\n-    <TouchableOpacity\n-      style={styles.container}\n-      onPress={handlePress}\n-    >\n-      <View style={styles.button}>\n-        <Ionicons name=\"add\" size={30} color=\"#fff\" />\n-      </View>\n-    </TouchableOpacity>\n-  );\n-}\n-\n-import { Ionicons } from '@expo/vector-icons';\n-import { useNavigation } from '@react-navigation/native';\n-import { StyleSheet, TouchableOpacity, View } from 'react-native';\n-import \n-\n-export default function CustomTabBarButton() {\n-  const navigation = useNavigation();\n-\n-  const handlePress = () => {\n     // Navega para a pilha 'Employes' e, dentro dela, para a tela 'AddEditEmployee'\n     navigation.navigate('Employes', { screen: 'AddEditEmployee' });\n   };\n \n@@ -47,4 +24,26 @@\n     </TouchableOpacity>\n   );\n }\n \n+const styles = StyleSheet.create({\n+  container: {\n+    top: -30,\n+    justifyContent: 'center',\n+    alignItems: 'center',\n+  },\n+  button: {\n+    width: 70,\n+    height: 70,\n+    borderRadius: 35,\n+    backgroundColor: '#007bff',\n+    justifyContent: 'center',\n+    alignItems: 'center',\n+    elevation: 8,\n+    shadowColor: '#007bff',\n+    shadowOffset: { width: 0, height: 4 },\n+    shadowOpacity: 0.3,\n+    shadowRadius: 4,\n+    borderWidth: 3,\n+    borderColor: '#fff'\n+  },\n+});\n"
+                },
+                {
+                    "date": 1760649903488,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,16 +1,14 @@\n import { Ionicons } from '@expo/vector-icons';\n import { useNavigation } from '@react-navigation/native';\n import {TouchableOpacity, View } from 'react-native';\n import styles from './styles';\n-import { StyleSheet, TouchableOpacity, View } from 'react-native';\n \n \n export default function CustomTabBarButton() {\n   const navigation = useNavigation();\n \n   const handlePress = () => {\n-    // Navega para a pilha 'Employes' e, dentro dela, para a tela 'AddEditEmployee'\n     navigation.navigate('Employes', { screen: 'AddEditEmployee' });\n   };\n \n   return (\n@@ -24,26 +22,4 @@\n     </TouchableOpacity>\n   );\n }\n \n-const styles = StyleSheet.create({\n-  container: {\n-    top: -30,\n-    justifyContent: 'center',\n-    alignItems: 'center',\n-  },\n-  button: {\n-    width: 70,\n-    height: 70,\n-    borderRadius: 35,\n-    backgroundColor: '#007bff',\n-    justifyContent: 'center',\n-    alignItems: 'center',\n-    elevation: 8,\n-    shadowColor: '#007bff',\n-    shadowOffset: { width: 0, height: 4 },\n-    shadowOpacity: 0.3,\n-    shadowRadius: 4,\n-    borderWidth: 3,\n-    borderColor: '#fff'\n-  },\n-});\n"
+                }
+            ],
+            "date": 1760649277199,
+            "name": "Commit-0",
+            "content": "import { Ionicons } from '@expo/vector-icons';\nimport { useNavigation } from '@react-navigation/native';\nimport { StyleSheet, TouchableOpacity, View } from 'react-native';\n\nexport default function CustomTabBarButton() {\n  const navigation = useNavigation();\n\n  const handlePress = () => {\n    // Navega para a pilha 'Employes' e, dentro dela, para a tela 'AddEditEmployee'\n    navigation.navigate('Employes', { screen: 'AddEditEmployee' });\n  };\n\n  return (\n    <TouchableOpacity\n      style={styles.container}\n      onPress={handlePress}\n    >\n      <View style={styles.button}>\n        <Ionicons name=\"add\" size={30} color=\"#fff\" />\n      </View>\n    </TouchableOpacity>\n  );\n}\n\n"
+        }
+    ]
+}

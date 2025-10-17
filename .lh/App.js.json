@@ -1,0 +1,58 @@
+{
+    "sourceFile": "App.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 10,
+            "patches": [
+                {
+                    "date": 1760462167625,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1760462174666,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,9 @@\n \n export default function App() {\n   return (\n     <View style={styles.container}>\n-      <Text>Open up App.js to start working on your app!</Text>\n+      <Routes>\n       <StatusBar style=\"auto\" />\n     </View>\n   );\n }\n"
+                },
+                {
+                    "date": 1760462185368,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,7 @@\n \n const styles = StyleSheet.create({\n   container: {\n     flex: 1,\n-    backgroundColor: '#fff',\n-    alignItems: 'center',\n-    justifyContent: 'center',\n+\n   },\n });\n"
+                },
+                {
+                    "date": 1760462194189,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,20 @@\n+import { StatusBar } from 'expo-status-bar';\n+import { StyleSheet, View } from 'react-native';\n+\n+import Routes from '@/routes/Routes';\n+\n+\n+export default function App() {\n+  return (\n+    <View style={styles.container}>\n+      <Routes>\n+      <StatusBar style=\"auto\" />\n+    </View>\n+  );\n+}\n+\n+const styles = StyleSheet.create({\n+  container: {\n+    flex: 1,\n+  },\n+});\n"
+                },
+                {
+                    "date": 1760462206099,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,20 @@\n+import { StatusBar } from 'expo-status-bar';\n+import { StyleSheet, View } from 'react-native';\n+\n+import Routes from '@/routes/Routes';\n+\n+\n+export default function App() {\n+  return (\n+    <View style={styles.container}>\n+      {/* <Routes> */}\n+      <StatusBar style=\"auto\" />\n+    </View>\n+  );\n+}\n+\n+const styles = StyleSheet.create({\n+  container: {\n+    flex: 1,\n+  },\n+});\n"
+                },
+                {
+                    "date": 1760462213799,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,9 @@\n \n export default function App() {\n   return (\n     <View style={styles.container}>\n-      {/* <Routes> */}\n+      <Routes/>\n       <StatusBar style=\"auto\" />\n     </View>\n   );\n }\n@@ -17,45 +17,4 @@\n   container: {\n     flex: 1,\n   },\n });\n-import { StatusBar } from 'expo-status-bar';\n-import { StyleSheet, View } from 'react-native';\n-\n-import Routes from '@/routes/Routes';\n-\n-\n-export default function App() {\n-  return (\n-    <View style={styles.container}>\n-      <Routes>\n-      <StatusBar style=\"auto\" />\n-    </View>\n-  );\n-}\n-\n-const styles = StyleSheet.create({\n-  container: {\n-    flex: 1,\n-  },\n-});\n-import { StatusBar } from 'expo-status-bar';\n-import { StyleSheet, Text, View } from 'react-native';\n-\n-import Routes from '@/routes/Routes';\n-\n-\n-export default function App() {\n-  return (\n-    <View style={styles.container}>\n-      <Routes>\n-      <StatusBar style=\"auto\" />\n-    </View>\n-  );\n-}\n-\n-const styles = StyleSheet.create({\n-  container: {\n-    flex: 1,\n-\n-  },\n-});\n"
+                },
+                {
+                    "date": 1760471430358,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,16 +1,19 @@\n import { StatusBar } from 'expo-status-bar';\n import { StyleSheet, View } from 'react-native';\n+import { SafeAreaView, StyleSheet } from 'react-native';\n \n import Routes from '@/routes/Routes';\n \n \n export default function App() {\n   return (\n     <View style={styles.container}>\n+    <SafeAreaView style={styles.container}>\n       <Routes/>\n       <StatusBar style=\"auto\" />\n     </View>\n+    </SafeAreaView>\n   );\n }\n \n const styles = StyleSheet.create({\n"
+                },
+                {
+                    "date": 1760476085537,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,19 +1,16 @@\n import { StatusBar } from 'expo-status-bar';\n import { StyleSheet, View } from 'react-native';\n-import { SafeAreaView, StyleSheet } from 'react-native';\n \n import Routes from '@/routes/Routes';\n \n \n export default function App() {\n   return (\n     <View style={styles.container}>\n-    <SafeAreaView style={styles.container}>\n-      <Routes/>\n+      <Routes />\n       <StatusBar style=\"auto\" />\n     </View>\n-    </SafeAreaView>\n   );\n }\n \n const styles = StyleSheet.create({\n"
+                },
+                {
+                    "date": 1760557208551,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,9 @@\n import { StatusBar } from 'expo-status-bar';\n import { StyleSheet, View } from 'react-native';\n \n+\n+\n import Routes from '@/routes/Routes';\n \n \n export default function App() {\n"
+                },
+                {
+                    "date": 1760557217141,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n import { StatusBar } from 'expo-status-bar';\n import { StyleSheet, View } from 'react-native';\n \n-import { }\n+import { Safe}\n \n import Routes from '@/routes/Routes';\n \n \n"
+                },
+                {
+                    "date": 1760557224574,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,22 @@\n+import { StatusBar } from 'expo-status-bar';\n+import { StyleSheet, View } from 'react-native';\n+\n+import { SafeAreaProvider,  } from 'react-native-safe-area-context';\n+\n+import Routes from '@/routes/Routes';\n+\n+\n+export default function App() {\n+  return (\n+    <View style={styles.container}>\n+      <Routes />\n+      <StatusBar style=\"auto\" />\n+    </View>\n+  );\n+}\n+\n+const styles = StyleSheet.create({\n+  container: {\n+    flex: 1,\n+  },\n+});\n"
+                }
+            ],
+            "date": 1760462167625,
+            "name": "Commit-0",
+            "content": "import { StatusBar } from 'expo-status-bar';\nimport { StyleSheet, Text, View } from 'react-native';\n\nimport Routes from '@/routes/Routes';\n\n\nexport default function App() {\n  return (\n    <View style={styles.container}>\n      <Text>Open up App.js to start working on your app!</Text>\n      <StatusBar style=\"auto\" />\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    flex: 1,\n    backgroundColor: '#fff',\n    alignItems: 'center',\n    justifyContent: 'center',\n  },\n});\n"
+        }
+    ]
+}

@@ -1,0 +1,22 @@
+{
+    "sourceFile": "src/components/customTabButton/styles/index.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1760649281373,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1760649287573,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,2 @@\n+import { StyleSheet } from \"react-native\";\n+\n"
+                }
+            ],
+            "date": 1760649281373,
+            "name": "Commit-0",
+            "content": "import "
+        }
+    ]
+}

@@ -1,0 +1,74 @@
+{
+    "sourceFile": "src/sqLite/SQLiteConecction.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 14,
+            "patches": [
+                {
+                    "date": 1760463058170,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1760463063527,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,1 @@\n+import * \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1760463071165,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,1 @@\n+import * SQLite\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1760463077138,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,1 @@\n+import * SQLite from \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1760463084955,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,1 @@\n+import * SQLite from 'expo'\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1760463216954,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,48 @@\n-import * SQLite from 'expo'\n-import * SQLite from \n-import * SQLite\n-import * \n-im\n\\ No newline at end of file\n+import * as SQLite from 'expo-sqlite';\n+\n+// abre (ou cria) o banco local\n+const db = SQLite.openDatabase('empresa.db');\n+\n+// cria a tabela, se não existir\n+export const createTable = () => {\n+  db.transaction(tx => {\n+    tx.executeSql(\n+      `CREATE TABLE IF NOT EXISTS funcionarios (\n+        id INTEGER PRIMARY KEY AUTOINCREMENT,\n+        nome TEXT,\n+        re TEXT,\n+        setor TEXT\n+      );`\n+    );\n+  });\n+};\n+\n+// inserir um funcionário\n+export const addFuncionario = (nome, re, setor) => {\n+  db.transaction(tx => {\n+    tx.executeSql(\n+      'INSERT INTO funcionarios (nome, re, setor) VALUES (?, ?, ?);',\n+      [nome, re, setor],\n+      (_, result) => console.log('✅ Inserido com sucesso', result),\n+      (_, error) => console.error('❌ Erro ao inserir', error)\n+    );\n+  });\n+};\n+\n+// buscar todos\n+export const getFuncionarios = (callback) => {\n+  db.transaction(tx => {\n+    tx.executeSql('SELECT * FROM funcionarios;', [], (_, { rows }) => {\n+      callback(rows._array);\n+    });\n+  });\n+};\n+\n+// deletar todos (opcional)\n+export const clearFuncionarios = () => {\n+  db.transaction(tx => {\n+    tx.executeSql('DELETE FROM funcionarios;');\n+  });\n+};\n+\n+export default db;\n"
+                },
+                {
+                    "date": 1760463578693,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,10 @@\n import * as SQLite from 'expo-sqlite';\n+import { openDatabase } from 'expo-sqlite';\n \n // abre (ou cria) o banco local\n const db = SQLite.openDatabase('empresa.db');\n+const db = openDatabase('empresa.db');\n \n // cria a tabela, se não existir\n export const createTable = () => {\n   db.transaction(tx => {\n"
+                },
+                {
+                    "date": 1760463596458,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,7 @@\n-import * as SQLite from 'expo-sqlite';\n import { openDatabase } from 'expo-sqlite';\n \n // abre (ou cria) o banco local\n-const db = SQLite.openDatabase('empresa.db');\n const db = openDatabase('empresa.db');\n \n // cria a tabela, se não existir\n export const createTable = () => {\n"
+                },
+                {
+                    "date": 1760463788015,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,14 +17,17 @@\n   });\n };\n \n // inserir um funcionário\n-export const addFuncionario = (nome, re, setor) => {\n+export const addFuncionario = (nome, re, setor, onSuccess) => {\n   db.transaction(tx => {\n     tx.executeSql(\n       'INSERT INTO funcionarios (nome, re, setor) VALUES (?, ?, ?);',\n       [nome, re, setor],\n-      (_, result) => console.log('✅ Inserido com sucesso', result),\n+      (_, result) => {\n+        console.log('✅ Inserido com sucesso', result);\n+        if (onSuccess) onSuccess(); // Chama o callback de sucesso\n+      },\n       (_, error) => console.error('❌ Erro ao inserir', error)\n     );\n   });\n };\n"
+                },
+                {
+                    "date": 1760463805575,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,9 @@\n import { openDatabase } from 'expo-sqlite';\n \n // abre (ou cria) o banco local\n const db = openDatabase('empresa.db');\n+const \n \n // cria a tabela, se não existir\n export const createTable = () => {\n   db.transaction(tx => {\n"
+                },
+                {
+                    "date": 1760463824237,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,52 @@\n+import { openDatabase } from 'expo-sqlite';\n+\n+// abre (ou cria) o banco local\n+const db = openDatabase('empresa.db');\n+const db = \n+\n+// cria a tabela, se não existir\n+export const createTable = () => {\n+  db.transaction(tx => {\n+    tx.executeSql(\n+      `CREATE TABLE IF NOT EXISTS funcionarios (\n+        id INTEGER PRIMARY KEY AUTOINCREMENT,\n+        nome TEXT,\n+        re TEXT,\n+        setor TEXT\n+      );`\n+    );\n+  });\n+};\n+\n+// inserir um funcionário\n+export const addFuncionario = (nome, re, setor, onSuccess) => {\n+  db.transaction(tx => {\n+    tx.executeSql(\n+      'INSERT INTO funcionarios (nome, re, setor) VALUES (?, ?, ?);',\n+      [nome, re, setor],\n+      (_, result) => {\n+        console.log('✅ Inserido com sucesso', result);\n+        if (onSuccess) onSuccess(); // Chama o callback de sucesso\n+      },\n+      (_, error) => console.error('❌ Erro ao inserir', error)\n+    );\n+  });\n+};\n+\n+// buscar todos\n+export const getFuncionarios = (callback) => {\n+  db.transaction(tx => {\n+    tx.executeSql('SELECT * FROM funcionarios;', [], (_, { rows }) => {\n+      callback(rows._array);\n+    });\n+  });\n+};\n+\n+// deletar todos (opcional)\n+export const clearFuncionarios = () => {\n+  db.transaction(tx => {\n+    tx.executeSql('DELETE FROM funcionarios;');\n+  });\n+};\n+\n+export default db;\n"
+                },
+                {
+                    "date": 1760463831895,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,52 @@\n+import { openDatabase } from 'expo-sqlite';\n+\n+// abre (ou cria) o banco local\n+const db = openDatabase('empresa.db');\n+const db = openDatabase\n+\n+// cria a tabela, se não existir\n+export const createTable = () => {\n+  db.transaction(tx => {\n+    tx.executeSql(\n+      `CREATE TABLE IF NOT EXISTS funcionarios (\n+        id INTEGER PRIMARY KEY AUTOINCREMENT,\n+        nome TEXT,\n+        re TEXT,\n+        setor TEXT\n+      );`\n+    );\n+  });\n+};\n+\n+// inserir um funcionário\n+export const addFuncionario = (nome, re, setor, onSuccess) => {\n+  db.transaction(tx => {\n+    tx.executeSql(\n+      'INSERT INTO funcionarios (nome, re, setor) VALUES (?, ?, ?);',\n+      [nome, re, setor],\n+      (_, result) => {\n+        console.log('✅ Inserido com sucesso', result);\n+        if (onSuccess) onSuccess(); // Chama o callback de sucesso\n+      },\n+      (_, error) => console.error('❌ Erro ao inserir', error)\n+    );\n+  });\n+};\n+\n+// buscar todos\n+export const getFuncionarios = (callback) => {\n+  db.transaction(tx => {\n+    tx.executeSql('SELECT * FROM funcionarios;', [], (_, { rows }) => {\n+      callback(rows._array);\n+    });\n+  });\n+};\n+\n+// deletar todos (opcional)\n+export const clearFuncionarios = () => {\n+  db.transaction(tx => {\n+    tx.executeSql('DELETE FROM funcionarios;');\n+  });\n+};\n+\n+export default db;\n"
+                },
+                {
+                    "date": 1760463842240,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,52 @@\n+import { openDatabase } from 'expo-sqlite';\n+\n+// abre (ou cria) o banco local\n+const db = openDatabase('empresa.db');\n+const db = openDatabase('em')\n+\n+// cria a tabela, se não existir\n+export const createTable = () => {\n+  db.transaction(tx => {\n+    tx.executeSql(\n+      `CREATE TABLE IF NOT EXISTS funcionarios (\n+        id INTEGER PRIMARY KEY AUTOINCREMENT,\n+        nome TEXT,\n+        re TEXT,\n+        setor TEXT\n+      );`\n+    );\n+  });\n+};\n+\n+// inserir um funcionário\n+export const addFuncionario = (nome, re, setor, onSuccess) => {\n+  db.transaction(tx => {\n+    tx.executeSql(\n+      'INSERT INTO funcionarios (nome, re, setor) VALUES (?, ?, ?);',\n+      [nome, re, setor],\n+      (_, result) => {\n+        console.log('✅ Inserido com sucesso', result);\n+        if (onSuccess) onSuccess(); // Chama o callback de sucesso\n+      },\n+      (_, error) => console.error('❌ Erro ao inserir', error)\n+    );\n+  });\n+};\n+\n+// buscar todos\n+export const getFuncionarios = (callback) => {\n+  db.transaction(tx => {\n+    tx.executeSql('SELECT * FROM funcionarios;', [], (_, { rows }) => {\n+      callback(rows._array);\n+    });\n+  });\n+};\n+\n+// deletar todos (opcional)\n+export const clearFuncionarios = () => {\n+  db.transaction(tx => {\n+    tx.executeSql('DELETE FROM funcionarios;');\n+  });\n+};\n+\n+export default db;\n"
+                },
+                {
+                    "date": 1760463851896,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n import { openDatabase } from 'expo-sqlite';\n \n // abre (ou cria) o banco local\n const db = openDatabase('empresa.db');\n-const db = openDatabase('')\n+const db = openDatabase('empresa.db')\n \n // cria a tabela, se não existir\n export const createTable = () => {\n   db.transaction(tx => {\n"
+                },
+                {
+                    "date": 1760463858277,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,51 @@\n+import { openDatabase } from 'expo-sqlite';\n+\n+// abre (ou cria) o banco local\n+const db = openDatabase('empresa.db');\n+\n+// cria a tabela, se não existir\n+export const createTable = () => {\n+  db.transaction(tx => {\n+    tx.executeSql(\n+      `CREATE TABLE IF NOT EXISTS funcionarios (\n+        id INTEGER PRIMARY KEY AUTOINCREMENT,\n+        nome TEXT,\n+        re TEXT,\n+        setor TEXT\n+      );`\n+    );\n+  });\n+};\n+\n+// inserir um funcionário\n+export const addFuncionario = (nome, re, setor, onSuccess) => {\n+  db.transaction(tx => {\n+    tx.executeSql(\n+      'INSERT INTO funcionarios (nome, re, setor) VALUES (?, ?, ?);',\n+      [nome, re, setor],\n+      (_, result) => {\n+        console.log('✅ Inserido com sucesso', result);\n+        if (onSuccess) onSuccess(); // Chama o callback de sucesso\n+      },\n+      (_, error) => console.error('❌ Erro ao inserir', error)\n+    );\n+  });\n+};\n+\n+// buscar todos\n+export const getFuncionarios = (callback) => {\n+  db.transaction(tx => {\n+    tx.executeSql('SELECT * FROM funcionarios;', [], (_, { rows }) => {\n+      callback(rows._array);\n+    });\n+  });\n+};\n+\n+// deletar todos (opcional)\n+export const clearFuncionarios = () => {\n+  db.transaction(tx => {\n+    tx.executeSql('DELETE FROM funcionarios;');\n+  });\n+};\n+\n+export default db;\n"
+                }
+            ],
+            "date": 1760463058170,
+            "name": "Commit-0",
+            "content": "im"
+        }
+    ]
+}

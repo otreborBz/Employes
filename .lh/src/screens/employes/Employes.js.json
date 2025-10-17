@@ -1,0 +1,26 @@
+{
+    "sourceFile": "src/screens/employes/Employes.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1760462526378,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1760462532738,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,5 +14,8 @@\n     flex: 1,\n     backgroundColor: '#fff',\n     alignItems: 'center',\n     justifyContent: 'center',\n- \n\\ No newline at end of file\n+  },\n+}\n+\n+)\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1760462538798,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,21 @@\n+import { StyleSheet, Text, View } from \"react-native\";\n+\n+\n+export default function Employes() {\n+  return (\n+    <View style={styles.container}>\n+      <Text>Employes</Text>\n+    </View>\n+  );\n+}\n+\n+const styles = StyleSheet.create({\n+  container: {\n+    flex: 1,\n+    backgroundColor: '#fff',\n+    alignItems: 'center',\n+    justifyContent: 'center',\n+  },\n+}\n+\n+)\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1760462526378,
+            "name": "Commit-0",
+            "content": "import { StyleSheet, Text, View } from \"react-native\";\n\n\nexport default function Home() {\n  return (\n    <View style={styles.container}>\n      <Text>Home</Text>\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    flex: 1,\n    backgroundColor: '#fff',\n    alignItems: 'center',\n    justifyContent: 'center',\n  },\n}\n\n)"
+        }
+    ]
+}
