@@ -23,6 +23,7 @@ export default function NewEmployes() {
   const [novoSetorInput, setNovoSetorInput] = useState('');
   const [novoTurnoInput, setNovoTurnoInput] = useState('');
 
+  const [allFuncionarios, setAllFuncionarios] = useState([]);
   const [setoresUnicos, setSetoresUnicos] = useState([]);
   const [turnosUnicos, setTurnosUnicos] = useState([]);
 
@@ -31,14 +32,15 @@ export default function NewEmployes() {
   // Carrega os dados da tela (funcionário para edição e listas de seleção)
   useEffect(() => {
     const loadScreenData = async () => {
+      // Carrega funcionários para extrair setores e turnos em uso
+      const funcionariosData = await getFuncionarios();
+      setAllFuncionarios(funcionariosData);
+
       // Carrega itens customizados do AsyncStorage
       const customSectors = await getCustomItems('@customSectors');
       const customTurnos = await getCustomItems('@customTurnos');
-
-      // Carrega funcionários para extrair setores e turnos em uso
-      const allFuncionarios = await getFuncionarios();
-      const usedSectors = allFuncionarios.map(f => f.setor);
-      const usedTurnos = allFuncionarios.map(f => f.turno);
+      const usedSectors = funcionariosData.map(f => f.setor);
+      const usedTurnos = funcionariosData.map(f => f.turno);
 
       // Combina e remove duplicatas
       const setores = [...new Set([...customSectors, ...usedSectors].filter(Boolean))].sort();
@@ -138,6 +140,74 @@ export default function NewEmployes() {
     }
   };
 
+  const handleDeleteSetor = async (setorParaDeletar) => {
+    const isSetorInUse = allFuncionarios.some(f => f.setor === setorParaDeletar);
+
+    if (isSetorInUse) {
+      setAlertInfo({
+        visible: true,
+        type: 'warning',
+        title: 'Ação Bloqueada',
+        message: `O setor "${setorParaDeletar}" está em uso e não pode ser excluído.`,
+        buttons: [{ text: 'Entendi' }],
+      });
+      return;
+    }
+
+    setAlertInfo({
+      visible: true,
+      type: 'confirm',
+      title: 'Excluir Setor',
+      message: `Tem certeza que deseja remover o setor "${setorParaDeletar}"?`,
+      buttons: [
+        { text: 'Cancelar', style: 'cancel' },
+        {
+          text: 'Remover',
+          style: 'destructive',
+          onPress: async () => {
+            const novaLista = setoresUnicos.filter(s => s !== setorParaDeletar);
+            setSetoresUnicos(novaLista);
+            await AsyncStorage.setItem('@customSectors', JSON.stringify(novaLista.filter(s => !allFuncionarios.some(f => f.setor === s))));
+          },
+        },
+      ],
+    });
+  };
+
+  const handleDeleteTurno = async (turnoParaDeletar) => {
+    const isTurnoInUse = allFuncionarios.some(f => f.turno === turnoParaDeletar);
+
+    if (isTurnoInUse) {
+      setAlertInfo({
+        visible: true,
+        type: 'warning',
+        title: 'Ação Bloqueada',
+        message: `O turno "${turnoParaDeletar}" está em uso e não pode ser excluído.`,
+        buttons: [{ text: 'Entendi' }],
+      });
+      return;
+    }
+
+    setAlertInfo({
+      visible: true,
+      type: 'confirm',
+      title: 'Excluir Turno',
+      message: `Tem certeza que deseja remover o turno "${turnoParaDeletar}"?`,
+      buttons: [
+        { text: 'Cancelar', style: 'cancel' },
+        {
+          text: 'Remover',
+          style: 'destructive',
+          onPress: async () => {
+            const novaLista = turnosUnicos.filter(t => t !== turnoParaDeletar);
+            setTurnosUnicos(novaLista);
+            await AsyncStorage.setItem('@customTurnos', JSON.stringify(novaLista.filter(t => !allFuncionarios.some(f => f.turno === t))));
+          },
+        },
+      ],
+    });
+  };
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -197,11 +267,16 @@ export default function NewEmployes() {
             </View>
             <FlatList
               data={setoresUnicos}
-              keyExtractor={(item, index) => index.toString()}
+              keyExtractor={(item) => item}
               renderItem={({ item }) => (
-                <TouchableOpacity style={styles.modalOption} onPress={() => { setSetor(item); setSetorModalVisible(false); }}>
-                  <Text style={styles.modalOptionText}>{item}</Text>
-                </TouchableOpacity>
+                <View style={styles.modalOption}>
+                  <TouchableOpacity style={{ flex: 1 }} onPress={() => { setSetor(item); setSetorModalVisible(false); }}>
+                    <Text style={styles.modalOptionText}>{item}</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={() => handleDeleteSetor(item)} style={{ padding: 5 }}>
+                    <Ionicons name="close-circle" size={22} color="#dc3545" />
+                  </TouchableOpacity>
+                </View>
               )}
             />
           </View>
@@ -226,9 +301,14 @@ export default function NewEmployes() {
               data={turnosUnicos}
               keyExtractor={(item) => item}
               renderItem={({ item }) => (
-                <TouchableOpacity style={styles.modalOption} onPress={() => { setTurno(item); setTurnoModalVisible(false); }}>
-                  <Text style={styles.modalOptionText}>{item}</Text>
-                </TouchableOpacity>
+                <View style={styles.modalOption}>
+                  <TouchableOpacity style={{ flex: 1 }} onPress={() => { setTurno(item); setTurnoModalVisible(false); }}>
+                    <Text style={styles.modalOptionText}>{item}</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={() => handleDeleteTurno(item)} style={{ padding: 5 }}>
+                    <Ionicons name="close-circle" size={22} color="#dc3545" />
+                  </TouchableOpacity>
+                </View>
               )}
             />
           </View>

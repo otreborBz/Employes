@@ -45,7 +45,14 @@ const styles = StyleSheet.create({
   modalInputContainer: { flexDirection: 'row', alignItems: 'center', marginBottom: 15 },
   modalInput: { flex: 1, height: 44, backgroundColor: '#f9f9f9', borderWidth: 1, borderColor: '#ddd', borderRadius: 8, padding: 10 },
   modalAddButton: { marginLeft: 10 },
-  modalOption: { padding: 15, borderBottomWidth: 1, borderBottomColor: '#eee' },
+  modalOption: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: '#eee'
+  },
   modalOptionText: { fontSize: 16, color: '#333' },
 });
 
