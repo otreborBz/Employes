@@ -46,7 +46,7 @@ export default function CustomAlert({ visible, type = 'success', title, message,
                   style={buttonStyle}
                   onPress={() => {
                     if (button.onPress) button.onPress();
-                    onClose(); // Fecha o alerta após o clique
+                    onClose();
                   }}
                 >
                   <Text style={textStyle}>{button.text}</Text>

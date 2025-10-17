@@ -289,7 +289,7 @@ export default function Home() {
 
   const handleAddNovoSetor = () => {
     if (novoSetorInput.trim()) {
-      setNewEmployee({ ...newEmployee, setor: novoSetorInput.trim() });
+      setNewEmployee({ ...newEmployee, setor: novoSetorInput.trim().toUpperCase() });
       setNovoSetorInput('');
       setSetorModalVisible(false);
     }
@@ -322,9 +322,6 @@ export default function Home() {
   };
 
   const handleNavigateWithFilter = (filter) => {
-    // Log para depuração: verifica o filtro que está sendo enviado
-    console.log(`[Home.js] Navegando para a lista de funcionários com o filtro: "${filter}"`);
-    // Navega para a aba 'Employes', e dentro dela, para a tela 'EmployeeList', passando o filtro como parâmetro
     navigation.navigate('Employes', { screen: 'EmployeeList', params: { filtro: filter } });
   };
 
