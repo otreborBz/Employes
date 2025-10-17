@@ -15,6 +15,8 @@ export const createTable = async () => {
         turno TEXT
       );`
   );
+
+  
   // Garante que a coluna 'turno' exista em instalações antigas
   const columns = await db.getAllAsync(`PRAGMA table_info(funcionarios);`);
   if (!columns.some(c => c.name === 'turno')) {

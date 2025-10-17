@@ -57,9 +57,7 @@ function TabRoutes() {
         component={EmployesStack}
         listeners={({ navigation }) => ({
           tabPress: (e) => {
-            // Previne a ação padrão da aba
             e.preventDefault();
-            // Navega para a lista de funcionários, passando um parâmetro para limpar qualquer filtro existente.
             navigation.navigate('Employes', { screen: 'EmployeeList', params: { filtro: null } });
           },
         })}
