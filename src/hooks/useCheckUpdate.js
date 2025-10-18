@@ -8,7 +8,7 @@ export default function useCheckUpdate() {
   useEffect(() => {
     async function checkForUpdate() {
       try {
-        const response = await fetch('https://raw.githubusercontent.com/otreborBz/employees-update/refs/heads/main/udapte.json');
+        const response = await fetch('https://raw.githubusercontent.com/otreborBz/employees-update/refs/heads/main/update.json');
         const data = await response.json();
 
         const localVersion = Constants.expoConfig.version;

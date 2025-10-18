@@ -1,0 +1,18 @@
+{
+    "sourceFile": "package.json",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1760820916124,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1760820916124,
+            "name": "Commit-0",
+            "content": "{\r\n  \"name\": \"employes\",\r\n  \"version\": \"2.0.0\",\r\n  \"main\": \"index.js\",\r\n  \"scripts\": {\r\n    \"start\": \"expo start\",\r\n    \"android\": \"expo run:android\",\r\n    \"ios\": \"expo run:ios\",\r\n    \"web\": \"expo start --web\"\r\n  },\r\n  \"dependencies\": {\r\n    \"@expo/vector-icons\": \"^15.0.2\",\r\n    \"@react-native-async-storage/async-storage\": \"2.2.0\",\r\n    \"@react-navigation/bottom-tabs\": \"^7.4.9\",\r\n    \"@react-navigation/native\": \"^7.1.18\",\r\n    \"@react-navigation/native-stack\": \"^7.3.28\",\r\n    \"babel-plugin-module-resolver\": \"^5.0.2\",\r\n    \"expo\": \"~54.0.13\",\r\n    \"expo-constants\": \"~18.0.9\",\r\n    \"expo-dev-client\": \"~6.0.15\",\r\n    \"expo-document-picker\": \"~14.0.7\",\r\n    \"expo-file-system\": \"~19.0.17\",\r\n    \"expo-linear-gradient\": \"~15.0.7\",\r\n    \"expo-sharing\": \"~14.0.7\",\r\n    \"expo-sqlite\": \"~16.0.8\",\r\n    \"expo-status-bar\": \"~3.0.8\",\r\n    \"react\": \"19.1.0\",\r\n    \"react-native\": \"0.81.4\",\r\n    \"react-native-safe-area-context\": \"~5.6.0\",\r\n    \"react-native-screens\": \"~4.16.0\"\r\n  },\r\n  \"private\": true,\r\n  \"devDependencies\": {\r\n    \"babel-preset-expo\": \"^54.0.4\"\r\n  }\r\n}\r\n"
+        }
+    ]
+}
