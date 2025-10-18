@@ -12,7 +12,7 @@ function CardItem({ item, onShare, onEdit, onDelete }) {
     <View style={styles.itemRow}>
       <View style={{ flex: 1 }}>
         <Text style={styles.itemName}>{item.nome}</Text>
-        <Text style={styles.itemDetails}>RE: {item.re} | {item.setor} | Turno: {item.turno}</Text>
+        <Text style={styles.itemDetails}>RE: {item.re} | {item.setor} | Turno: {item.turno} | Tel: {item.telefone}</Text>
       </View>
 
       <TouchableOpacity style={styles.iconButton} onPress={() => setModalVisible(true)}>

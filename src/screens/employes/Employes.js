@@ -93,7 +93,7 @@ export default function Employes() {
   // 🔗 Compartilhar Funcionário via WhatsApp
   const handleShare = async (item) => {
     if (!item) return;
-    const message = `*Detalhes do Funcionário*\n\n*Nome:* ${item.nome}\n*RE:* ${item.re}\n*Setor:* ${item.setor}\n*Turno:* ${item.turno}`;
+    const message = `*Detalhes do Funcionário*\n\n*Nome:* ${item.nome}\n*RE:* ${item.re}\n*Setor:* ${item.setor}\n*Turno:* ${item.turno}\n*Telefone:* ${item.telefone}`;
     const url = `whatsapp://send?text=${encodeURIComponent(message)}`;
 
     try {

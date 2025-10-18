@@ -1,4 +1,5 @@
 import CustomAlert from '@/components/alert/Alert';
+import useCheckUpdate from '@/hooks/useCheckUpdate';
 import { addFuncionario, clearFuncionarios, createTable, getFuncionarios } from '@/sqLite/SQLiteConecction';
 import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -22,7 +23,6 @@ import {
   View
 } from 'react-native';
 import styles from './styles';
-import useCheckUpdate from '@/hooks/useCheckUpdate';
 
 
 export default function Home() {
@@ -32,7 +32,7 @@ export default function Home() {
 
   const [funcionarios, setFuncionarios] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
-  const [newEmployee, setNewEmployee] = useState({ nome: '', re: '', setor: '', turno: '' });
+  const [newEmployee, setNewEmployee] = useState({ nome: '', re: '', setor: '', turno: '', telefone: '' });
   const [setorModalVisible, setSetorModalVisible] = useState(false);
   const [novoSetorInput, setNovoSetorInput] = useState('');
   const [viewSetoresModal, setViewSetoresModal] = useState(false);
@@ -95,8 +95,27 @@ export default function Home() {
   // Ordena os turnos para exibição consistente
   const turnosOrdenados = Object.keys(funcionariosPorTurno).sort();
 
+  // Função para formatar o número de telefone no modal de adição rápida
+  const handleQuickAddPhoneChange = (text) => {
+    const cleaned = ('' + text).replace(/\D/g, ''); // Remove tudo que não é dígito
+    let formatted = cleaned;
+
+    if (cleaned.length > 0) {
+      formatted = '(' + cleaned.substring(0, 2);
+    }
+    if (cleaned.length > 2) {
+      formatted = '(' + cleaned.substring(0, 2) + ') ' + cleaned.substring(2, 7);
+    }
+    if (cleaned.length > 7) {
+      formatted = '(' + cleaned.substring(0, 2) + ') ' + cleaned.substring(2, 7) + '-' + cleaned.substring(7, 11);
+    }
+
+    setNewEmployee({ ...newEmployee, telefone: formatted });
+  };
+
+
   const handleAdd = async () => {
-    if (!newEmployee.nome || !newEmployee.re || !newEmployee.setor || !newEmployee.turno) {
+    if (!newEmployee.nome || !newEmployee.re || !newEmployee.setor || !newEmployee.turno || !newEmployee.telefone) {
       setAlertInfo({
         visible: true,
         type: 'warning',
@@ -108,8 +127,8 @@ export default function Home() {
     }
 
     try {
-      await addFuncionario(newEmployee.nome, newEmployee.re, newEmployee.setor, newEmployee.turno);
-      setNewEmployee({ nome: '', re: '', setor: '', turno: '' });
+      await addFuncionario(newEmployee.nome, newEmployee.re, newEmployee.setor, newEmployee.turno, newEmployee.telefone);
+      setNewEmployee({ nome: '', re: '', setor: '', turno: '', telefone: '' });
       setModalVisible(false);
       Keyboard.dismiss();
       await loadData();
@@ -257,7 +276,7 @@ export default function Home() {
 
       for (const f of data.funcionarios) {
         if (f.re && !existingREs.has(String(f.re))) {
-          await addFuncionario(f.nome, f.re, f.setor, f.turno || 'Não definido');
+          await addFuncionario(f.nome, f.re, f.setor, f.turno || 'Não definido', f.telefone || '');
           existingREs.add(String(f.re));
           addedCount++;
         } else {
@@ -305,7 +324,7 @@ export default function Home() {
 
   const handleShare = async (item) => {
     if (!item) return;
-    const message = `*Detalhes do Funcionário*\n\n*Nome:* ${item.nome}\n*RE:* ${item.re}\n*Setor:* ${item.setor}\n*Turno:* ${item.turno}`;
+    const message = `*Detalhes do Funcionário*\n\n*Nome:* ${item.nome}\n*RE:* ${item.re}\n*Setor:* ${item.setor}\n*Turno:* ${item.turno}\n*Telefone:* ${item.telefone}`;
     const url = `whatsapp://send?text=${encodeURIComponent(message)}`;
 
     try {
@@ -329,7 +348,7 @@ export default function Home() {
 
     <LinearGradient colors={['#F5F9FF', '#FFFFFF']} style={styles.container}>
       {updateModal}
-      <View style={styles.container}> 
+      <View style={styles.container}>
         <ScrollView contentContainerStyle={styles.scrollContainer} showsVerticalScrollIndicator={false}>
           <View style={styles.greetingContainer}>
             <Text style={styles.greeting}>👋 Olá, {userName.toUpperCase() || 'bem-vindo'}!</Text>
@@ -424,6 +443,17 @@ export default function Home() {
                 onChangeText={text => setNewEmployee({ ...newEmployee, re: text.replace(/[^0-9]/g, '') })}
                 style={styles.modalInput}
                 keyboardType="numeric"
+              />
+            </View>
+            <View style={styles.inputContainer}>
+              <Ionicons name="call-outline" size={20} color="#999" style={styles.inputIcon} />
+              <TextInput
+                placeholder="(XX) XXXXX-XXXX"
+                value={newEmployee.telefone}
+                onChangeText={handleQuickAddPhoneChange}
+                style={styles.modalInput}
+                keyboardType="phone-pad"
+                maxLength={15}
               />
             </View>
             {/* Botão para abrir modal de setor */}
@@ -607,6 +637,12 @@ export default function Home() {
                   <Ionicons name="business-outline" size={26} color="#007BFF" style={styles.detailIcon} />
                   <View><Text style={styles.detailLabel}>Setor</Text>
                     <Text style={styles.detailValue}>{funcionarios[funcionarios.length - 1].setor}</Text>
+                  </View>
+                </View>
+                <View style={styles.detailRow}>
+                  <Ionicons name="call-outline" size={26} color="#007BFF" style={styles.detailIcon} />
+                  <View><Text style={styles.detailLabel}>Telefone</Text>
+                    <Text style={styles.detailValue}>{funcionarios[funcionarios.length - 1].telefone}</Text>
                   </View>
                 </View>
                 <View style={styles.detailRow}>

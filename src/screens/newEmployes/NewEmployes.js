@@ -17,6 +17,7 @@ export default function NewEmployes() {
   const [re, setRe] = useState('');
   const [setor, setSetor] = useState('');
   const [turno, setTurno] = useState('');
+  const [telefone, setTelefone] = useState('');
 
   const [setorModalVisible, setSetorModalVisible] = useState(false);
   const [turnoModalVisible, setTurnoModalVisible] = useState(false);
@@ -57,6 +58,7 @@ export default function NewEmployes() {
           setRe(funcionario.re);
           setSetor(funcionario.setor);
           setTurno(funcionario.turno);
+          setTelefone(funcionario.telefone || '');
         }
       }
     };
@@ -64,8 +66,26 @@ export default function NewEmployes() {
     loadScreenData();
   }, [employeeId]);
 
+  // Função para formatar o número de telefone
+  const handlePhoneChange = (text) => {
+    const cleaned = ('' + text).replace(/\D/g, ''); // Remove tudo que não é dígito
+    let formatted = cleaned;
+
+    if (cleaned.length > 0) {
+      formatted = '(' + cleaned.substring(0, 2);
+    }
+    if (cleaned.length > 2) {
+      formatted = '(' + cleaned.substring(0, 2) + ') ' + cleaned.substring(2, 7);
+    }
+    if (cleaned.length > 7) {
+      formatted = '(' + cleaned.substring(0, 2) + ') ' + cleaned.substring(2, 7) + '-' + cleaned.substring(7, 11);
+    }
+
+    setTelefone(formatted);
+  };
+
   const handleSalvar = async () => {
-    if (!nome || !re || !setor || !turno) {
+    if (!nome || !re || !setor || !turno || !telefone) {
       setAlertInfo({
         visible: true,
         type: 'warning',
@@ -78,9 +98,9 @@ export default function NewEmployes() {
 
     try {
       if (employeeId) {
-        await updateFuncionario(employeeId, nome, re, setor, turno);
+        await updateFuncionario(employeeId, nome, re, setor, turno, telefone);
       } else {
-        await addFuncionario(nome, re, setor, turno);
+        await addFuncionario(nome, re, setor, turno, telefone);
       }
       navigation.goBack();
     } catch (error) {
@@ -227,6 +247,9 @@ export default function NewEmployes() {
 
         <Text style={styles.label}>RE (Registro)</Text>
         <TextInput placeholder="Digite o RE" placeholderTextColor="#888" value={re} onChangeText={(text) => setRe(text.replace(/[^0-9]/g, ''))} keyboardType="numeric" style={styles.input} />
+
+        <Text style={styles.label}>Telefone</Text>
+        <TextInput placeholder="(XX) XXXXX-XXXX" placeholderTextColor="#888" value={telefone} onChangeText={handlePhoneChange} keyboardType="phone-pad" style={styles.input} maxLength={15} />
 
         <Text style={styles.label}>Setor</Text>
         <TouchableOpacity style={styles.selector} onPress={() => setSetorModalVisible(true)}>
