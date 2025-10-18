@@ -4,7 +4,11 @@ import {
   deleteFuncionario,
   getFuncionarios
 } from '@/sqLite/SQLiteConecction';
+import {
+  Ionicons
+} from '@expo/vector-icons';
 import { useIsFocused, useNavigation, useRoute } from '@react-navigation/native';
+import Constants from 'expo-constants';
 import { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
@@ -13,7 +17,8 @@ import {
   Platform,
   Text,
   TextInput,
-  View
+  TouchableOpacity,
+  View,
 } from 'react-native';
 
 import CardEmployes from '@/components/cardEmployes/CardEmployes';
@@ -26,6 +31,8 @@ export default function Employes() {
   const [lista, setLista] = useState([]);
   const [busca, setBusca] = useState('');
   const [loading, setLoading] = useState(true);
+  const [selectionMode, setSelectionMode] = useState(false);
+  const [selectedItems, setSelectedItems] = useState([]);
 
   const [alertInfo, setAlertInfo] = useState({ visible: false });
 
@@ -33,6 +40,8 @@ export default function Employes() {
   useEffect(() => {
     if (isFocused) {
       createTable().then(() => carregar());
+      // Limpa a seleção ao focar na tela
+      cancelSelection();
     }
   }, [isFocused]);
 
@@ -109,6 +118,63 @@ export default function Employes() {
     }
   };
 
+  // 🔵 Funções para o modo de seleção
+  const handleLongPress = (item) => {
+    if (!selectionMode) {
+      setSelectionMode(true);
+      setSelectedItems([item.id]);
+    }
+  };
+
+  const handlePress = (item) => {
+    if (selectionMode) {
+      // Se o item já está selecionado, remove-o
+      if (selectedItems.includes(item.id)) {
+        const newSelection = selectedItems.filter(id => id !== item.id);
+        setSelectedItems(newSelection);
+        // Se a seleção ficar vazia, desativa o modo de seleção
+        if (newSelection.length === 0) {
+          setSelectionMode(false);
+        }
+      } else {
+        // Se não, adiciona-o
+        setSelectedItems([...selectedItems, item.id]);
+      }
+    } else {
+      // Comportamento padrão: navegar para a edição
+      navigation.navigate('AddEditEmployee', { employeeId: item.id });
+    }
+  };
+
+  const cancelSelection = () => {
+    setSelectionMode(false);
+    setSelectedItems([]);
+  };
+
+  const handleMultiShare = async () => {
+    if (selectedItems.length === 0) return;
+
+    const funcionariosSelecionados = lista.filter(f => selectedItems.includes(f.id));
+
+    let message = '*Lista de Funcionários*\n\n';
+    funcionariosSelecionados.forEach((item, index) => {
+      message += `*${index + 1}. ${item.nome}*\n`;
+      message += `   - RE: ${item.re}\n`;
+      message += `   - Setor: ${item.setor}\n`;
+      message += `   - Turno: ${item.turno}\n`;
+      message += `   - Telefone: ${item.telefone}\n\n`;
+    });
+
+    const url = `whatsapp://send?text=${encodeURIComponent(message)}`;
+
+    try {
+      await Linking.openURL(url);
+    } catch (error) {
+      setAlertInfo({ visible: true, type: 'error', title: 'Erro', message: 'Não foi possível abrir o WhatsApp.', buttons: [{ text: 'OK' }] });
+    } finally {
+      cancelSelection();
+    }
+  };
 
   // Combina os turnos base com os já cadastrados para ter uma lista completa e sem duplicatas
   const turnosUnicos = [...new Set(lista.map(f => f.turno).filter(Boolean).sort())];
@@ -137,9 +203,37 @@ export default function Employes() {
         style={{ flex: 1 }}
       >
         {/* Header */}
-        <View style={styles.header}>
-          <Text style={styles.headerTitle}>Funcionários</Text>
-        </View>
+        {selectionMode ? (
+          <View style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            paddingHorizontal: 20,
+            paddingVertical: 15,
+            paddingTop: Constants.statusBarHeight + 15,
+            backgroundColor: '#e7f3ff',
+            borderBottomWidth: 1,
+            borderBottomColor: '#cce5ff',
+          }}>
+            <TouchableOpacity onPress={cancelSelection}>
+              <Ionicons name="close" size={26} color="#007bff" />
+            </TouchableOpacity>
+            <Text style={{
+              fontSize: 18,
+              fontWeight: 'bold',
+              color: '#004085',
+            }}>
+              {selectedItems.length} selecionado(s)
+            </Text>
+            <TouchableOpacity onPress={handleMultiShare}>
+              <Ionicons name="share-social" size={26} color="#007bff" />
+            </TouchableOpacity>
+          </View>
+        ) : (
+          <View style={styles.header}>
+            <Text style={styles.headerTitle}>Funcionários</Text>
+          </View>
+        )}
 
         {/* Busca */}
         <TextInput
@@ -158,9 +252,13 @@ export default function Employes() {
         ) : (
           <CardEmployes
             data={filtrados}
-            onEdit={(item) => navigation.navigate('AddEditEmployee', { employeeId: item.id })}
+            onPress={handlePress}
+            onLongPress={handleLongPress}
+            onEdit={(item) => navigation.navigate('AddEditEmployee', { employeeId: item.id })} // Para o menu de 3 pontos
             onDelete={excluir}
             onShare={handleShare}
+            selectionMode={selectionMode}
+            selectedItems={selectedItems}
           />
 
         )}
