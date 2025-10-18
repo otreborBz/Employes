@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
   headerTitle: { fontSize: 18, fontWeight: 'bold', color: '#333' },
   formContainer: {
     flex: 1,
-    padding: 20
+    padding: 20,
   },
   label: {
     fontSize: 14,
@@ -15,11 +15,22 @@ const styles = StyleSheet.create({
     marginBottom: 8
   },
   input: { height: 50, backgroundColor: '#fff', borderWidth: 1, borderColor: '#ddd', borderRadius: 8, paddingHorizontal: 15, fontSize: 16, marginBottom: 20 },
-  selector: { height: 50, backgroundColor: '#fff', borderWidth: 1, borderColor: '#ddd', borderRadius: 8, paddingHorizontal: 15, marginBottom: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+  selector: {
+    height: 50,
+    backgroundColor: '#fff',
+    borderWidth: 1,
+    borderColor: '#ddd',
+    borderRadius: 8,
+    paddingHorizontal: 15,
+    marginBottom: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between'
+  },
   selectorText: { fontSize: 16, color: '#333' },
   selectorPlaceholder: { fontSize: 16, color: '#888' },
   footer: {
-    marginBottom: 40,
+    marginBottom: 20,
     padding: 20,
     borderTopWidth: 1,
     borderColor: '#eee',
