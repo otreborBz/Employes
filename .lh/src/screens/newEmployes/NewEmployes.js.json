@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 8,
+            "activePatchIndex": 9,
             "patches": [
                 {
                     "date": 1760648900267,
@@ -40,6 +40,10 @@
                 {
                     "date": 1760653598116,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,9 +24,8 @@\n   const [novoTurnoInput, setNovoTurnoInput] = useState('');\n \n   const [setoresUnicos, setSetoresUnicos] = useState([]);\n   const [turnosUnicos, setTurnosUnicos] = useState([]);\n-  const baseTurnos = ['A', 'B', 'C', 'X', 'Y', '1', '2', '3'];\n \n   const [alertInfo, setAlertInfo] = useState({ visible: false });\n \n   // Carrega os dados da tela (funcionário para edição e listas de seleção)\n@@ -42,9 +41,9 @@\n       const usedTurnos = allFuncionarios.map(f => f.turno);\n \n       // Combina e remove duplicatas\n       const setores = [...new Set([...customSectors, ...usedSectors].filter(Boolean))].sort();\n-      const turnos = [...new Set([...baseTurnos, ...customTurnos, ...usedTurnos].filter(Boolean))].sort();\n+      const turnos = [...new Set([...customTurnos, ...usedTurnos].filter(Boolean))].sort();\n \n       setSetoresUnicos(setores);\n       setTurnosUnicos(turnos);\n \n"
+                },
+                {
+                    "date": 1760909855806,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -265,28 +265,8 @@\n             {turno || 'Selecione o Turno'}\r\n           </Text>\r\n           <Ionicons name=\"chevron-down\" size={20} color=\"#666\" />\r\n         </TouchableOpacity>\r\n-        <View style={styles.row}>\r\n-          <View style={{ flex: 1 }}>\r\n-            <Text style={styles.label}>Setor</Text>\r\n-            <TouchableOpacity style={styles.selector} onPress={() => setSetorModalVisible(true)}>\r\n-              <Text style={setor ? styles.selectorText : styles.selectorPlaceholder} numberOfLines={1}>\r\n-                {setor || 'Selecione'}\r\n-              </Text>\r\n-              <Ionicons name=\"chevron-down\" size={20} color=\"#666\" />\r\n-            </TouchableOpacity>\r\n-          </View>\r\n-          <View style={{ flex: 1 }}>\r\n-            <Text style={styles.label}>Turno</Text>\r\n-            <TouchableOpacity style={styles.selector} onPress={() => setTurnoModalVisible(true)}>\r\n-              <Text style={turno ? styles.selectorText : styles.selectorPlaceholder} numberOfLines={1}>\r\n-                {turno || 'Selecione'}\r\n-              </Text>\r\n-              <Ionicons name=\"chevron-down\" size={20} color=\"#666\" />\r\n-            </TouchableOpacity>\r\n-          </View>\r\n-        </View>\r\n       </ScrollView>\r\n \r\n       <View style={styles.footer}>\r\n         <TouchableOpacity style={[styles.button, styles.btnSave]} onPress={handleSalvar}>\r\n"
                 }
             ],
             "date": 1760648900267,

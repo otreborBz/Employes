@@ -14,6 +14,11 @@ const styles = StyleSheet.create({
     color: '#555',
     marginBottom: 8
   },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    gap: 15,
+  },
   input: { height: 50, backgroundColor: '#fff', borderWidth: 1, borderColor: '#ddd', borderRadius: 8, paddingHorizontal: 15, fontSize: 16, marginBottom: 20 },
   selector: {
     height: 50,
@@ -30,13 +35,23 @@ const styles = StyleSheet.create({
   selectorText: { fontSize: 16, color: '#333' },
   selectorPlaceholder: { fontSize: 16, color: '#888' },
   footer: {
-    marginBottom: 20,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    marginBottom: 60,
     padding: 20,
-    borderTopWidth: 1,
     borderColor: '#eee',
-    backgroundColor: '#fff'
   },
   button: {
+    width: '40%',
+    height: 50,
+    backgroundColor: '#007bff',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 8,
+    marginBottom: 10,
+  },
+  buttonText: {
     paddingVertical: 14,
     borderRadius: 10,
     alignItems: 'center'
@@ -68,4 +83,3 @@ const styles = StyleSheet.create({
 });
 
 export default styles;
-

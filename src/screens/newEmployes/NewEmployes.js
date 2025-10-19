@@ -251,26 +251,31 @@ export default function NewEmployes() {
         <Text style={styles.label}>Telefone</Text>
         <TextInput placeholder="(XX) XXXXX-XXXX" placeholderTextColor="#888" value={telefone} onChangeText={handlePhoneChange} keyboardType="phone-pad" style={styles.input} maxLength={15} />
 
-        <Text style={styles.label}>Setor</Text>
-        <TouchableOpacity style={styles.selector} onPress={() => setSetorModalVisible(true)}>
-          <Text style={setor ? styles.selectorText : styles.selectorPlaceholder}>
-            {setor || 'Selecione o Setor'}
-          </Text>
-          <Ionicons name="chevron-down" size={20} color="#666" />
-        </TouchableOpacity>
-
-        <Text style={styles.label}>Turno</Text>
-        <TouchableOpacity style={styles.selector} onPress={() => setTurnoModalVisible(true)}>
-          <Text style={turno ? styles.selectorText : styles.selectorPlaceholder}>
-            {turno || 'Selecione o Turno'}
-          </Text>
-          <Ionicons name="chevron-down" size={20} color="#666" />
-        </TouchableOpacity>
+        <View style={styles.row}>
+          <View style={{ flex: 1 }}>
+            <Text style={styles.label}>Setor</Text>
+            <TouchableOpacity style={styles.selector} onPress={() => setSetorModalVisible(true)}>
+              <Text style={setor ? styles.selectorText : styles.selectorPlaceholder} numberOfLines={1}>
+                {setor || 'Selecione'}
+              </Text>
+              <Ionicons name="chevron-down" size={20} color="#666" />
+            </TouchableOpacity>
+          </View>
+          <View style={{ flex: 1 }}>
+            <Text style={styles.label}>Turno</Text>
+            <TouchableOpacity style={styles.selector} onPress={() => setTurnoModalVisible(true)}>
+              <Text style={turno ? styles.selectorText : styles.selectorPlaceholder} numberOfLines={1}>
+                {turno || 'Selecione'}
+              </Text>
+              <Ionicons name="chevron-down" size={20} color="#666" />
+            </TouchableOpacity>
+          </View>
+        </View>
       </ScrollView>
 
       <View style={styles.footer}>
         <TouchableOpacity style={[styles.button, styles.btnSave]} onPress={handleSalvar}>
-          <Text style={[styles.buttonText, { color: '#fff' }]}>{employeeId ? 'Salvar Alterações' : 'Adicionar Funcionário'}</Text>
+          <Text style={[styles.buttonText, { color: '#fff' }]}>{employeeId ? 'Salvar Alterações' : 'Adicionar'}</Text>
         </TouchableOpacity>
       </View>
 
