@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/components/selectSetorModal/SelectSetorModal.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1760910846685,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1760910846685,
+            "name": "Commit-0",
+            "content": "import React from 'react';\nimport { Modal, View, Text, TouchableOpacity, TextInput, FlatList } from 'react-native';\nimport { Ionicons } from '@expo/vector-icons';\nimport styles from './styles'; // Ajuste o caminho conforme necessário\n\nexport default function SelectSetorModal({\n  visible,\n  onClose,\n  setores = [],\n  selectedSetor,\n  setSelectedSetor,\n  novoSetorInput,\n  setNovoSetorInput,\n  onAddSetor,\n  onDeleteSetor,\n}) {\n  const handleSelectSetor = (item) => {\n    setSelectedSetor(item);\n    onClose();\n  };\n\n  return (\n    <Modal\n      visible={visible}\n      transparent\n      animationType=\"fade\"\n      onRequestClose={onClose}\n    >\n      <View style={styles.modalOverlay}>\n        <View style={styles.modalContent}>\n          <TouchableOpacity\n            style={styles.modalCloseButton}\n            onPress={onClose}\n          >\n            <Ionicons name=\"close\" size={26} color=\"#666\" />\n          </TouchableOpacity>\n\n          <Text style={styles.modalTitle}>Setores</Text>\n\n          <View style={styles.modalInputContainer}>\n            <TextInput\n              placeholder=\"Adicionar novo setor\"\n              placeholderTextColor=\"#888\"\n              value={novoSetorInput}\n              onChangeText={setNovoSetorInput}\n              style={styles.modalInput}\n              onSubmitEditing={onAddSetor}\n            />\n            <TouchableOpacity\n              style={styles.modalAddButton}\n              onPress={onAddSetor}\n            >\n              <Ionicons name=\"add-circle\" size={28} color=\"#007bff\" />\n            </TouchableOpacity>\n          </View>\n\n          <FlatList\n            data={setores}\n            keyExtractor={(item) => item}\n            renderItem={({ item }) => (\n              <View style={styles.modalOption}>\n                <TouchableOpacity\n                  style={{ flex: 1 }}\n                  onPress={() => handleSelectSetor(item)}\n                >\n                  <Text style={styles.modalOptionText}>{item}</Text>\n                </TouchableOpacity>\n\n                <TouchableOpacity\n                  onPress={() => onDeleteSetor(item)}\n                  style={{ padding: 5 }}\n                >\n                  <Ionicons name=\"close-circle\" size={22} color=\"#dc3545\" />\n                </TouchableOpacity>\n              </View>\n            )}\n          />\n        </View>\n      </View>\n    </Modal>\n  );\n}\n"
+        }
+    ]
+}

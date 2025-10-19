@@ -5,7 +5,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
 import { FlatList, KeyboardAvoidingView, Modal, Platform, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import styles from './styles'; // Assumindo que os estilos já existem
+import styles from './styles';
+import SelectTurnoModal from '@/components/selectTurnoModal/SelectTurnoModal';
+import SelectSetorModal from '@/components/selectSetorModal/SelectSetorModal';
 
 
 export default function NewEmployes() {
@@ -280,68 +282,32 @@ export default function NewEmployes() {
       </View>
 
       {/* Modal de setores */}
-      <Modal visible={setorModalVisible} transparent animationType="fade" onRequestClose={() => setSetorModalVisible(false)}>
-        <View style={styles.modalOverlay}>
-          <View style={styles.modalContent}>
-            <TouchableOpacity style={styles.modalCloseButton} onPress={() => setSetorModalVisible(false)}>
-              <Ionicons name="close" size={26} color="#666" />
-            </TouchableOpacity>
-            <Text style={styles.modalTitle}>Setores</Text>
-            <View style={styles.modalInputContainer}>
-              <TextInput placeholder="Adicionar novo setor" placeholderTextColor="#888" value={novoSetorInput} onChangeText={setNovoSetorInput} style={styles.modalInput} onSubmitEditing={handleAddNewSetor} />
-              <TouchableOpacity style={styles.modalAddButton} onPress={handleAddNewSetor}>
-                <Ionicons name="add-circle" size={28} color="#007bff" />
-              </TouchableOpacity>
-            </View>
-            <FlatList
-              data={setoresUnicos}
-              keyExtractor={(item) => item}
-              renderItem={({ item }) => (
-                <View style={styles.modalOption}>
-                  <TouchableOpacity style={{ flex: 1 }} onPress={() => { setSetor(item); setSetorModalVisible(false); }}>
-                    <Text style={styles.modalOptionText}>{item}</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity onPress={() => handleDeleteSetor(item)} style={{ padding: 5 }}>
-                    <Ionicons name="close-circle" size={22} color="#dc3545" />
-                  </TouchableOpacity>
-                </View>
-              )}
-            />
-          </View>
-        </View>
-      </Modal>
+      <SelectSetorModal
+        visible={setorModalVisible}
+        onClose={() => setSetorModalVisible(false)}
+        setores={setoresUnicos}
+        selectedSetor={setor}
+        setSelectedSetor={setSetor}
+        novoSetorInput={novoSetorInput}
+        setNovoSetorInput={setNovoSetorInput}
+        onAddSetor={handleAddNewSetor}
+        onDeleteSetor={handleDeleteSetor}
+      />
+
 
       {/* Modal de turnos */}
-      <Modal visible={turnoModalVisible} transparent animationType="fade" onRequestClose={() => setTurnoModalVisible(false)}>
-        <View style={styles.modalOverlay}>
-          <View style={styles.modalContent}>
-            <TouchableOpacity style={styles.modalCloseButton} onPress={() => setTurnoModalVisible(false)}>
-              <Ionicons name="close" size={26} color="#666" />
-            </TouchableOpacity>
-            <Text style={styles.modalTitle}>Turnos</Text>
-            <View style={styles.modalInputContainer}>
-              <TextInput placeholder="Adicionar novo turno" placeholderTextColor="#888" value={novoTurnoInput} onChangeText={setNovoTurnoInput} style={styles.modalInput} onSubmitEditing={handleAddNewTurno} />
-              <TouchableOpacity style={styles.modalAddButton} onPress={handleAddNewTurno}>
-                <Ionicons name="add-circle" size={28} color="#007bff" />
-              </TouchableOpacity>
-            </View>
-            <FlatList
-              data={turnosUnicos}
-              keyExtractor={(item) => item}
-              renderItem={({ item }) => (
-                <View style={styles.modalOption}>
-                  <TouchableOpacity style={{ flex: 1 }} onPress={() => { setTurno(item); setTurnoModalVisible(false); }}>
-                    <Text style={styles.modalOptionText}>{item}</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity onPress={() => handleDeleteTurno(item)} style={{ padding: 5 }}>
-                    <Ionicons name="close-circle" size={22} color="#dc3545" />
-                  </TouchableOpacity>
-                </View>
-              )}
-            />
-          </View>
-        </View>
-      </Modal>
+      <SelectTurnoModal
+        visible={turnoModalVisible}
+        onClose={() => setTurnoModalVisible(false)}
+        turnos={turnosUnicos}
+        selectedTurno={turno}
+        setSelectedTurno={setTurno}
+        novoTurnoInput={novoTurnoInput}
+        setNovoTurnoInput={setNovoTurnoInput}
+        onAddTurno={handleAddNewTurno}
+        onDeleteTurno={handleDeleteTurno}
+      />
+
 
       <CustomAlert {...alertInfo} onClose={() => setAlertInfo({ visible: false })} />
     </KeyboardAvoidingView>

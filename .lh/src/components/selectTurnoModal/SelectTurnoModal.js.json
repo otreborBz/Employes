@@ -1,0 +1,58 @@
+{
+    "sourceFile": "src/components/selectTurnoModal/SelectTurnoModal.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 10,
+            "patches": [
+                {
+                    "date": 1760910280106,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1760910285480,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,1 +1,1 @@\n-import \n\\ No newline at end of file\n+import { Modal}\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1760910295768,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,1 @@\n+import { Modal, Text, TouchableOpacity  }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1760910301753,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,2 @@\n+import { Modal, Text, TouchableOpacity } from 'react-native'\n+import\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1760910307429,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,4 @@\n+import { Modal, Text, TouchableOpacity } from 'react-native'\n+\n+\n+\n"
+                },
+                {
+                    "date": 1760910312568,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,1 @@\n+import { Modal, Text, TouchableOpacity } from 'react-nativ\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1760910320256,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,4 @@\n-import { Modal, Text, TouchableOpacity } from 'react-nativ\n import { Modal, Text, TouchableOpacity } from 'react-native'\n \n \n-\n-import { Modal, Text, TouchableOpacity } from 'react-native'\n-import\n-import { Modal, Text, TouchableOpacity  }\n-import { Modal}\n\\ No newline at end of file\n+exp\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1760910326385,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,4 +1,4 @@\n import { Modal, Text, TouchableOpacity } from 'react-native'\n \n \n-exp\n\\ No newline at end of file\n+export default \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1760910332529,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,4 @@\n+import { Modal, Text, TouchableOpacity } from 'react-native'\n+\n+\n+export default function\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1760910342749,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,4 +1,4 @@\n import { Modal, Text, TouchableOpacity } from 'react-native'\n \n \n-export default function SelectTurnoModal\n\\ No newline at end of file\n+export default function SelectTurnoModal()\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1760910348309,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,6 @@\n+import { Modal, Text, TouchableOpacity } from 'react-native'\n+\n+\n+export default function SelectTurnoModal(){\n+  \n+}\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1760910280106,
+            "name": "Commit-0",
+            "content": "import "
+        }
+    ]
+}
