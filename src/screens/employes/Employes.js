@@ -126,26 +126,6 @@ export default function Employes() {
     }
   };
 
-  const handlePress = (item) => {
-    if (selectionMode) {
-      // Se o item já está selecionado, remove-o
-      if (selectedItems.includes(item.id)) {
-        const newSelection = selectedItems.filter(id => id !== item.id);
-        setSelectedItems(newSelection);
-        // Se a seleção ficar vazia, desativa o modo de seleção
-        if (newSelection.length === 0) {
-          setSelectionMode(false);
-        }
-      } else {
-        // Se não, adiciona-o
-        setSelectedItems([...selectedItems, item.id]);
-      }
-    } else {
-      // Comportamento padrão: navegar para a edição
-      navigation.navigate('AddEditEmployee', { employeeId: item.id });
-    }
-  };
-
   const cancelSelection = () => {
     setSelectionMode(false);
     setSelectedItems([]);
@@ -252,7 +232,6 @@ export default function Employes() {
         ) : (
           <CardEmployes
             data={filtrados}
-            onPress={handlePress}
             onLongPress={handleLongPress}
             onEdit={(item) => navigation.navigate('AddEditEmployee', { employeeId: item.id })} // Para o menu de 3 pontos
             onDelete={excluir}

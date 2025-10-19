@@ -5,13 +5,12 @@ import { FlatList, Modal, Text, TouchableOpacity, View } from 'react-native';
 import styles from './styles';
 
 // Subcomponente para cada item da lista, com seu próprio modal
-function CardItem({ item, onShare, onEdit, onDelete, onLongPress, onPress, isSelected, selectionMode }) {
+function CardItem({ item, onShare, onEdit, onDelete, onLongPress, isSelected, selectionMode }) {
   const [modalVisible, setModalVisible] = useState(false);
 
   return (
     <TouchableOpacity
       style={[styles.itemRow, isSelected && styles.itemSelected]}
-      onPress={() => onPress(item)}
       onLongPress={() => onLongPress(item)}
       delayLongPress={200}
     >
@@ -129,7 +128,7 @@ function CardItem({ item, onShare, onEdit, onDelete, onLongPress, onPress, isSel
   );
 }
 
-export default function CardEmployes({ data, onShare, onEdit, onDelete, onLongPress, onPress, selectionMode, selectedItems }) {
+export default function CardEmployes({ data, onShare, onEdit, onDelete, onLongPress, selectionMode, selectedItems }) {
 
   return (
     <FlatList
@@ -144,7 +143,6 @@ export default function CardEmployes({ data, onShare, onEdit, onDelete, onLongPr
           onEdit={onEdit}
           onDelete={onDelete}
           onLongPress={onLongPress}
-          onPress={onPress}
         />
       )}
       contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: 80 }}
