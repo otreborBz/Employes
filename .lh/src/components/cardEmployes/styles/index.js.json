@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 4,
+            "activePatchIndex": 5,
             "patches": [
                 {
                     "date": 1760560651752,
@@ -24,6 +24,10 @@
                 {
                     "date": 1760564792968,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,5 +23,38 @@\n   iconButton: {\n     marginLeft: 10,\n   },\n   // Estilos do Modal\n-  mod\n\\ No newline at end of file\n+  modalOverlay: {\n+    flex: 1,\n+    justifyContent: 'center',\n+    alignItems: 'center',\n+    backgroundColor: 'rgba(0, 0, 0, 0.5)',\n+  },\n+  modalContent: {\n+    width: '70%',\n+    backgroundColor: 'white',\n+    borderRadius: 12,\n+    padding: 10,\n+    shadowColor: '#000',\n+    shadowOffset: { width: 0, height: 2 },\n+    shadowOpacity: 0.25,\n+    shadowRadius: 4,\n+    elevation: 5,\n+  },\n+  modalOption: {\n+    flexDirection: 'row',\n+    alignItems: 'center',\n+    paddingVertical: 12,\n+    paddingHorizontal: 15,\n+    borderBottomWidth: 1,\n+    borderBottomColor: '#f0f0f0',\n+  },\n+  modalOptionText: {\n+    fontSize: 16,\n+    color: '#333',\n+    marginLeft: 15,\n+    fontWeight: '500',\n+  },\n+});\n+\n+export default styles;\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1760998001019,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,94 @@\n+import { StyleSheet } from \"react-native\";\r\n+\r\n+const styles = StyleSheet.create({\r\n+  card: {\r\n+    backgroundColor: '#fff',\r\n+    borderRadius: 12,\r\n+    padding: 15,\r\n+    marginBottom: 15,\r\n+    borderWidth: 1,\r\n+    borderColor: '#e9ecef',\r\n+    shadowColor: '#000',\r\n+    shadowOffset: { width: 0, height: 1 },\r\n+    shadowOpacity: 0.05,\r\n+    shadowRadius: 2,\r\n+    elevation: 2,\r\n+  },\r\n+  cardSelected: {\r\n+    backgroundColor: '#e7f3ff',\r\n+    borderColor: '#b8daff',\r\n+  },\r\n+  cardHeader: {\r\n+    flexDirection: 'row',\r\n+    alignItems: 'center',\r\n+    borderBottomWidth: 1,\r\n+    borderBottomColor: '#f1f3f5',\r\n+    paddingBottom: 10,\r\n+    marginBottom: 10,\r\n+  },\r\n+  cardTitleContainer: {\r\n+    flex: 1,\r\n+    marginLeft: 12,\r\n+  },\r\n+  cardName: {\r\n+    fontSize: 17,\r\n+    fontWeight: 'bold',\r\n+    color: '#343a40',\r\n+  },\r\n+  cardRe: {\r\n+    fontSize: 14,\r\n+    color: '#6c757d',\r\n+    marginTop: 2,\r\n+  },\r\n+  cardTextSelected: {\r\n+    color: '#004085',\r\n+  },\r\n+  menuContainer: {\r\n+    flexDirection: 'row',\r\n+    alignItems: 'center',\r\n+  },\r\n+  menuOption: {\r\n+    padding: 5,\r\n+    marginLeft: 10,\r\n+  },\r\n+  cardBody: {\r\n+    // O corpo do card\r\n+  },\r\n+  detailsContainer: {\r\n+    paddingTop: 10,\r\n+  },\r\n+  detailRow: {\r\n+    flexDirection: 'row',\r\n+    alignItems: 'flex-start',\r\n+    marginBottom: 8,\r\n+  },\r\n+  detailIcon: {\r\n+    marginRight: 10,\r\n+    marginTop: 2,\r\n+  },\r\n+  detailText: {\r\n+    fontSize: 15,\r\n+    color: '#495057',\r\n+    flex: 1, // Permite que o texto quebre a linha\r\n+  },\r\n+  expandButton: {\r\n+    flexDirection: 'row',\r\n+    alignItems: 'center',\r\n+    justifyContent: 'center',\r\n+    paddingVertical: 8,\r\n+    paddingVertical: 10,\r\n+    marginTop: 5,\r\n+    backgroundColor: '#f8f9fa',\r\n+    borderRadius: 8,\r\n+    borderWidth: 1,\r\n+    borderColor: '#dee2e6',\r\n+  },\r\n+  expandButtonText: {\r\n+    fontSize: 14,\r\n+    fontWeight: '600',\r\n+    color: '#007bff',\r\n+    marginRight: 5,\r\n+  },\r\n+});\r\n+\r\n+export default styles;\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1760560651752,

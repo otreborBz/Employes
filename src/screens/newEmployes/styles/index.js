@@ -36,14 +36,14 @@ const styles = StyleSheet.create({
   selectorPlaceholder: { fontSize: 16, color: '#888' },
   footer: {
     flexDirection: 'row',
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 60,
     padding: 20,
     borderColor: '#eee',
   },
   button: {
-    width: '40%',
+    width: '100%',
     height: 50,
     backgroundColor: '#007bff',
     justifyContent: 'center',
@@ -64,7 +64,28 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   },
   // Modal Styles
- 
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalView: {
+    width: '90%',
+    maxHeight: '80%',
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 25,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  modalTitle: { fontSize: 20, fontWeight: 'bold', marginBottom: 20, color: '#333' },
+  closeButton: { position: 'absolute', top: 15, right: 15, zIndex: 1 },
+
 });
 
 export default styles;

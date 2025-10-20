@@ -32,7 +32,7 @@ export default function Home() {
 
   const [funcionarios, setFuncionarios] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
-  const [newEmployee, setNewEmployee] = useState({ nome: '', re: '', setor: '', turno: '', telefone: '' });
+  const [newEmployee, setNewEmployee] = useState({ nome: '', re: '', setor: '', turno: '', telefone: '', endereco: '' });
   const [setorModalVisible, setSetorModalVisible] = useState(false);
   const [novoSetorInput, setNovoSetorInput] = useState('');
   const [viewSetoresModal, setViewSetoresModal] = useState(false);
@@ -43,6 +43,8 @@ export default function Home() {
   const [inputName, setInputName] = useState('');
   const [alertInfo, setAlertInfo] = useState({ visible: false });
   const [turnoModalVisible, setTurnoModalVisible] = useState(false);
+  const [enderecoModalVisible, setEnderecoModalVisible] = useState(false);
+  const [addressParts, setAddressParts] = useState({ rua: '', numero: '', bairro: '', cidade: '', estado: '' });
   const [novoTurnoInput, setNovoTurnoInput] = useState('');
   const [managementModalVisible, setManagementModalVisible] = useState(false);
 
@@ -127,8 +129,9 @@ export default function Home() {
     }
 
     try {
-      await addFuncionario(newEmployee.nome, newEmployee.re, newEmployee.setor, newEmployee.turno, newEmployee.telefone);
-      setNewEmployee({ nome: '', re: '', setor: '', turno: '', telefone: '' });
+      await addFuncionario(newEmployee.nome, newEmployee.re, newEmployee.setor, newEmployee.turno, newEmployee.telefone, newEmployee.endereco);
+      setNewEmployee({ nome: '', re: '', setor: '', turno: '', telefone: '', endereco: '' }); // Limpa o formulário principal
+      setAddressParts({ rua: '', numero: '', bairro: '', cidade: '', estado: '' }); // Limpa os campos de endereço
       setModalVisible(false);
       Keyboard.dismiss();
       await loadData();
@@ -276,7 +279,7 @@ export default function Home() {
 
       for (const f of data.funcionarios) {
         if (f.re && !existingREs.has(String(f.re))) {
-          await addFuncionario(f.nome, f.re, f.setor, f.turno || 'Não definido', f.telefone || '');
+          await addFuncionario(f.nome, f.re, f.setor, f.turno || 'Não definido', f.telefone || '', f.endereco || '');
           existingREs.add(String(f.re));
           addedCount++;
         } else {
@@ -324,19 +327,46 @@ export default function Home() {
 
   const handleShare = async (item) => {
     if (!item) return;
-    const message = `*Detalhes do Funcionário*\n\n*Nome:* ${item.nome}\n*RE:* ${item.re}\n*Setor:* ${item.setor}\n*Turno:* ${item.turno}\n*Telefone:* ${item.telefone}`;
-    const url = `whatsapp://send?text=${encodeURIComponent(message)}`;
 
-    try {
-      const supported = await Linking.canOpenURL(url);
-      if (supported) {
-        await Linking.openURL(url);
-      } else {
-        setAlertInfo({ visible: true, type: 'error', title: 'Erro', message: 'WhatsApp não está instalado no seu dispositivo.', buttons: [{ text: 'OK' }] });
+    const performShare = async (includeAddress) => {
+      let message = `*Detalhes do Funcionário*\n\n*Nome:* ${item.nome}\n*RE:* ${item.re}\n*Setor:* ${item.setor}\n*Turno:* ${item.turno}\n*Telefone:* ${item.telefone}`;
+      if (includeAddress && item.endereco) {
+        message += `\n*Endereço:* ${item.endereco}`;
       }
-    } catch (error) {
-      console.error("Erro ao abrir WhatsApp:", error);
-      setAlertInfo({ visible: true, type: 'error', title: 'Erro', message: 'Não foi possível abrir o WhatsApp.', buttons: [{ text: 'OK' }] });
+      const url = `whatsapp://send?text=${encodeURIComponent(message)}`;
+      try {
+        const supported = await Linking.canOpenURL(url);
+        if (supported) {
+          await Linking.openURL(url);
+        } else {
+          setAlertInfo({ visible: true, type: 'error', title: 'Erro', message: 'WhatsApp não está instalado no seu dispositivo.', buttons: [{ text: 'OK' }] });
+        }
+      } catch (error) {
+        console.error("Erro ao abrir WhatsApp:", error);
+        setAlertInfo({ visible: true, type: 'error', title: 'Erro', message: 'Não foi possível abrir o WhatsApp.', buttons: [{ text: 'OK' }] });
+      }
+    };
+
+    if (item.endereco) {
+      setAlertInfo({
+        visible: true,
+        type: 'confirm',
+        title: 'Incluir Endereço?',
+        message: 'Deseja incluir o endereço do funcionário no compartilhamento?',
+        buttons: [
+          {
+            text: 'Não, omitir',
+            style: 'cancel',
+            onPress: () => performShare(false),
+          },
+          {
+            text: 'Sim, incluir',
+            onPress: () => performShare(true),
+          },
+        ],
+      });
+    } else {
+      performShare(false);
     }
   };
 
@@ -456,6 +486,25 @@ export default function Home() {
                 maxLength={15}
               />
             </View>
+            {/* Botão para abrir modal de endereço */}
+            <TouchableOpacity style={[styles.inputContainer, styles.selectorButton]} onPress={() => {
+              const parts = newEmployee.endereco.split(' - ');
+              setAddressParts({
+                rua: parts[0] || '',
+                numero: parts[1] || '',
+                bairro: parts[2] || '',
+                cidade: parts[3] || '',
+                estado: parts[4] || '',
+              });
+              setEnderecoModalVisible(true);
+            }}>
+              <Ionicons name="location-outline" size={20} color="#999" style={styles.inputIcon} />
+              <Text style={newEmployee.endereco ? styles.inputText : styles.placeholderText} numberOfLines={1}>
+                {newEmployee.endereco || 'Adicionar Endereço (Opcional)'}
+              </Text>
+              <Ionicons name="chevron-forward" size={20} color="#666" />
+            </TouchableOpacity>
+
             {/* Botão para abrir modal de setor */}
             <TouchableOpacity style={[styles.inputContainer, styles.selectorButton]} onPress={() => setSetorModalVisible(true)}>
               <Text style={newEmployee.setor ? styles.inputText : styles.placeholderText}>
@@ -570,6 +619,51 @@ export default function Home() {
         </View>
       </Modal>
 
+      {/* Modal de Endereço para Adição Rápida */}
+      <Modal
+        visible={enderecoModalVisible}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setEnderecoModalVisible(false)}
+      >
+        <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={styles.modalContainer}>
+          <View style={styles.modalView}>
+            <TouchableOpacity onPress={() => setEnderecoModalVisible(false)} style={styles.closeButton}>
+              <Ionicons name="close" size={26} color="#666" />
+            </TouchableOpacity>
+            <Text style={styles.modalTitle}>Endereço do Funcionário</Text>
+            <ScrollView style={{ width: '100%' }}>
+              <TextInput placeholder="Rua" value={addressParts.rua} onChangeText={text => setAddressParts(prev => ({ ...prev, rua: text }))} style={styles.modalInput} />
+              <View style={{ flexDirection: 'row', gap: 10 }}>
+                <TextInput
+                  placeholder="Número"
+                  value={addressParts.numero}
+                  onChangeText={text => setAddressParts(prev => ({ ...prev, numero: text }))}
+                  style={[styles.modalInput, { flex: 1 }]}
+                  keyboardType="numeric"
+                />
+                <TextInput
+                  placeholder="Bairro"
+                  value={addressParts.bairro}
+                  onChangeText={text => setAddressParts(prev => ({ ...prev, bairro: text }))}
+                  style={[styles.modalInput, { flex: 2 }]}
+                />
+              </View>
+              <TextInput placeholder="Cidade" value={addressParts.cidade} onChangeText={text => setAddressParts(prev => ({ ...prev, cidade: text }))} style={styles.modalInput} />
+              <TextInput placeholder="Estado (UF)" value={addressParts.estado} onChangeText={text => setAddressParts(prev => ({ ...prev, estado: text }))} style={styles.modalInput} maxLength={2} autoCapitalize="characters" />
+            </ScrollView>
+            <TouchableOpacity style={[styles.modalButton, { width: '100%', marginTop: 15 }]} onPress={() => {
+              const fullAddress = [addressParts.rua, addressParts.numero, addressParts.bairro, addressParts.cidade, addressParts.estado].filter(Boolean).join(' - ');
+              setNewEmployee({ ...newEmployee, endereco: fullAddress });
+              setEnderecoModalVisible(false);
+            }}>
+              <Ionicons name="save-outline" size={20} color="#fff" style={{ marginRight: 6 }} />
+              <Text style={styles.modalButtonText}>Salvar Endereço</Text>
+            </TouchableOpacity>
+          </View>
+        </KeyboardAvoidingView>
+      </Modal>
+
       {/* Modal para Visualizar Setores */}
       <Modal
         visible={viewSetoresModal}
@@ -645,6 +739,12 @@ export default function Home() {
                     <Text style={styles.detailValue}>{funcionarios[funcionarios.length - 1].telefone}</Text>
                   </View>
                 </View>
+                {funcionarios[funcionarios.length - 1].endereco && (
+                  <View style={styles.detailRow}>
+                    <Ionicons name="location-outline" size={26} color="#007BFF" style={styles.detailIcon} />
+                    <View><Text style={styles.detailLabel}>Endereço</Text><Text style={styles.detailValue}>{funcionarios[funcionarios.length - 1].endereco}</Text></View>
+                  </View>
+                )}
                 <View style={styles.detailRow}>
                   <Ionicons name="time-outline" size={26} color="#007BFF" style={styles.detailIcon} />
                   <View>

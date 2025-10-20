@@ -216,6 +216,26 @@ const styles = StyleSheet.create({
     marginLeft: 15,
     fontWeight: '500',
   },
+  // Estilos para o Modal de Compartilhamento
+  shareOptionRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: '#f0f0f0',
+  },
+  shareOptionName: {
+    fontSize: 16,
+    color: '#333',
+    flex: 1,
+    marginRight: 10,
+  },
+  noAddressText: {
+    fontSize: 14,
+    color: '#999',
+    fontStyle: 'italic',
+  },
 });
 
 export default styles;

@@ -1,13 +1,13 @@
 import CustomAlert from '@/components/alert/Alert';
-import { addFuncionario, getFuncionarioById, getFuncionarios, updateFuncionario } from '@/sqLite/SQLiteConecction';
+import SelectSetorModal from '@/components/selectSetorModal/SelectSetorModal';
+import SelectTurnoModal from '@/components/selectTurnoModal/SelectTurnoModal';
+import { addFuncionario, getFuncionarioById, getFuncionarios, updateFuncionario } from '@/sqLite/SQLiteConecction'; // prettier-ignore
 import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
-import { FlatList, KeyboardAvoidingView, Modal, Platform, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { KeyboardAvoidingView, Modal, Platform, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import styles from './styles';
-import SelectTurnoModal from '@/components/selectTurnoModal/SelectTurnoModal';
-import SelectSetorModal from '@/components/selectSetorModal/SelectSetorModal';
 
 
 export default function NewEmployes() {
@@ -20,10 +20,13 @@ export default function NewEmployes() {
   const [setor, setSetor] = useState('');
   const [turno, setTurno] = useState('');
   const [telefone, setTelefone] = useState('');
+  const [endereco, setEndereco] = useState('');
 
   const [setorModalVisible, setSetorModalVisible] = useState(false);
   const [turnoModalVisible, setTurnoModalVisible] = useState(false);
   const [novoSetorInput, setNovoSetorInput] = useState('');
+  const [enderecoModalVisible, setEnderecoModalVisible] = useState(false);
+  const [addressParts, setAddressParts] = useState({ rua: '', numero: '', bairro: '', cidade: '', estado: '' });
   const [novoTurnoInput, setNovoTurnoInput] = useState('');
 
   const [allFuncionarios, setAllFuncionarios] = useState([]);
@@ -61,6 +64,17 @@ export default function NewEmployes() {
           setSetor(funcionario.setor);
           setTurno(funcionario.turno);
           setTelefone(funcionario.telefone || '');
+          const fullAddress = funcionario.endereco || '';
+          setEndereco(fullAddress);
+          // Divide o endereço salvo para preencher os campos do modal
+          const parts = fullAddress.split(' - ');
+          setAddressParts({
+            rua: parts[0] || '',
+            numero: parts[1] || '',
+            bairro: parts[2] || '',
+            cidade: parts[3] || '',
+            estado: parts[4] || '',
+          });
         }
       }
     };
@@ -100,9 +114,9 @@ export default function NewEmployes() {
 
     try {
       if (employeeId) {
-        await updateFuncionario(employeeId, nome, re, setor, turno, telefone);
+        await updateFuncionario(employeeId, nome, re, setor, turno, telefone, endereco);
       } else {
-        await addFuncionario(nome, re, setor, turno, telefone);
+        await addFuncionario(nome, re, setor, turno, telefone, endereco);
       }
       navigation.goBack();
     } catch (error) {
@@ -253,6 +267,25 @@ export default function NewEmployes() {
         <Text style={styles.label}>Telefone</Text>
         <TextInput placeholder="(XX) XXXXX-XXXX" placeholderTextColor="#888" value={telefone} onChangeText={handlePhoneChange} keyboardType="phone-pad" style={styles.input} maxLength={15} />
 
+        <Text style={styles.label}>Endereço (Opcional)</Text>
+        <TouchableOpacity style={styles.selector} onPress={() => {
+          const parts = endereco.split(' - ');
+          setAddressParts({
+            rua: parts[0] || '',
+            numero: parts[1] || '',
+            bairro: parts[2] || '',
+            cidade: parts[3] || '',
+            estado: parts[4] || '',
+          });
+          setEnderecoModalVisible(true);
+        }}>
+          <Text style={endereco ? styles.selectorText : styles.selectorPlaceholder} numberOfLines={2}>
+            {endereco || 'Adicionar endereço'}
+          </Text>
+          <Ionicons name="location-outline" size={20} color="#666" />
+        </TouchableOpacity>
+
+
         <View style={styles.row}>
           <View style={{ flex: 1 }}>
             <Text style={styles.label}>Setor</Text>
@@ -273,13 +306,13 @@ export default function NewEmployes() {
             </TouchableOpacity>
           </View>
         </View>
-      </ScrollView>
 
-      <View style={styles.footer}>
-        <TouchableOpacity style={[styles.button, styles.btnSave]} onPress={handleSalvar}>
-          <Text style={[styles.buttonText, { color: '#fff' }]}>{employeeId ? 'Salvar Alterações' : 'Adicionar'}</Text>
-        </TouchableOpacity>
-      </View>
+        <View style={styles.footer}>
+          <TouchableOpacity style={[styles.button, styles.btnSave]} onPress={handleSalvar}>
+            <Text style={[styles.buttonText, { color: '#fff' }]}>{employeeId ? 'Salvar Alterações' : 'Adicionar'}</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
 
       {/* Modal de setores */}
       <SelectSetorModal
@@ -307,6 +340,51 @@ export default function NewEmployes() {
         onAddTurno={handleAddNewTurno}
         onDeleteTurno={handleDeleteTurno}
       />
+
+      {/* Modal de Endereço */}
+      <Modal
+        visible={enderecoModalVisible}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setEnderecoModalVisible(false)}
+      >
+        <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={styles.modalContainer}>
+          <View style={styles.modalView}>
+            <TouchableOpacity onPress={() => setEnderecoModalVisible(false)} style={styles.closeButton}>
+              <Ionicons name="close" size={26} color="#666" />
+            </TouchableOpacity>
+            <Text style={styles.modalTitle}>Endereço do Funcionário</Text>
+            <ScrollView style={{ width: '100%' }}>
+              <Text style={styles.label}>Rua</Text>
+              <TextInput placeholder="Ex: Av. Principal" value={addressParts.rua} onChangeText={text => setAddressParts(prev => ({ ...prev, rua: text }))} style={styles.input} />
+
+              <View style={styles.row}>
+                <View style={{ flex: 1, marginRight: 8 }}>
+                  <Text style={styles.label}>Número</Text>
+                  <TextInput placeholder="Ex: 123" value={addressParts.numero} onChangeText={text => setAddressParts(prev => ({ ...prev, numero: text }))} style={styles.input} keyboardType="numeric" />
+                </View>
+                <View style={{ flex: 2 }}>
+                  <Text style={styles.label}>Bairro</Text>
+                  <TextInput placeholder="Ex: Centro" value={addressParts.bairro} onChangeText={text => setAddressParts(prev => ({ ...prev, bairro: text }))} style={styles.input} />
+                </View>
+              </View>
+
+              <Text style={styles.label}>Cidade</Text>
+              <TextInput placeholder="Ex: São Paulo" value={addressParts.cidade} onChangeText={text => setAddressParts(prev => ({ ...prev, cidade: text }))} style={styles.input} />
+
+              <Text style={styles.label}>Estado</Text>
+              <TextInput placeholder="Ex: SP" value={addressParts.estado} onChangeText={text => setAddressParts(prev => ({ ...prev, estado: text }))} style={styles.input} maxLength={2} autoCapitalize="characters" />
+            </ScrollView>
+            <TouchableOpacity style={[styles.button, styles.btnSave, { width: '100%', marginTop: 15 }]} onPress={() => {
+              const fullAddress = [addressParts.rua, addressParts.numero, addressParts.bairro, addressParts.cidade, addressParts.estado].filter(Boolean).join(' - ');
+              setEndereco(fullAddress);
+              setEnderecoModalVisible(false);
+            }}>
+              <Text style={[styles.buttonText, { color: '#fff' }]}>Salvar Endereço</Text>
+            </TouchableOpacity>
+          </View>
+        </KeyboardAvoidingView>
+      </Modal>
 
 
       <CustomAlert {...alertInfo} onClose={() => setAlertInfo({ visible: false })} />

@@ -1,6 +1,5 @@
 import CustomAlert from '@/components/alert/Alert';
 import {
-  createTable,
   deleteFuncionario,
   getFuncionarios
 } from '@/sqLite/SQLiteConecction';
@@ -14,7 +13,9 @@ import {
   ActivityIndicator,
   KeyboardAvoidingView,
   Linking,
+  Modal,
   Platform,
+  Switch,
   Text,
   TextInput,
   TouchableOpacity,
@@ -34,12 +35,15 @@ export default function Employes() {
   const [selectionMode, setSelectionMode] = useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
 
+  const [multiShareModalVisible, setMultiShareModalVisible] = useState(false);
+  const [shareOptions, setShareOptions] = useState({});
+
   const [alertInfo, setAlertInfo] = useState({ visible: false });
 
   // Efeito para carregar os dados quando a tela está em foco
   useEffect(() => {
     if (isFocused) {
-      createTable().then(() => carregar());
+      carregar();
       // Limpa a seleção ao focar na tela
       cancelSelection();
     }
@@ -102,19 +106,47 @@ export default function Employes() {
   // 🔗 Compartilhar Funcionário via WhatsApp
   const handleShare = async (item) => {
     if (!item) return;
-    const message = `*Detalhes do Funcionário*\n\n*Nome:* ${item.nome}\n*RE:* ${item.re}\n*Setor:* ${item.setor}\n*Turno:* ${item.turno}\n*Telefone:* ${item.telefone}`;
-    const url = `whatsapp://send?text=${encodeURIComponent(message)}`;
 
-    try {
-      const supported = await Linking.canOpenURL(url);
-      if (supported) {
-        await Linking.openURL(url);
-      } else {
-        setAlertInfo({ visible: true, type: 'error', title: 'Erro', message: 'WhatsApp não está instalado no seu dispositivo.', buttons: [{ text: 'OK' }] });
+    const performShare = async (includeAddress) => {
+      let message = `*Detalhes do Funcionário*\n\n*Nome:* ${item.nome}\n*RE:* ${item.re}\n*Setor:* ${item.setor}\n*Turno:* ${item.turno}\n*Telefone:* ${item.telefone}`;
+      if (includeAddress && item.endereco) {
+        message += `\n*Endereço:* ${item.endereco}`;
       }
-    } catch (error) {
-      console.error("Erro ao abrir WhatsApp:", error);
-      setAlertInfo({ visible: true, type: 'error', title: 'Erro', message: 'Não foi possível abrir o WhatsApp.', buttons: [{ text: 'OK' }] });
+      const url = `whatsapp://send?text=${encodeURIComponent(message)}`;
+      try {
+        const supported = await Linking.canOpenURL(url);
+        if (supported) {
+          await Linking.openURL(url);
+        } else {
+          setAlertInfo({ visible: true, type: 'error', title: 'Erro', message: 'WhatsApp não está instalado no seu dispositivo.', buttons: [{ text: 'OK' }] });
+        }
+      } catch (error) {
+        console.error("Erro ao abrir WhatsApp:", error);
+        setAlertInfo({ visible: true, type: 'error', title: 'Erro', message: 'Não foi possível abrir o WhatsApp.', buttons: [{ text: 'OK' }] });
+      }
+    };
+
+    if (item.endereco) {
+      setAlertInfo({
+        visible: true,
+        type: 'confirm',
+        title: 'Incluir Endereço?',
+        message: 'Deseja incluir o endereço do funcionário no compartilhamento?',
+        buttons: [
+          {
+            text: 'Não, omitir',
+            style: 'cancel',
+            onPress: () => performShare(false),
+          },
+          {
+            text: 'Sim, incluir',
+            onPress: () => performShare(true),
+          },
+        ],
+      });
+    } else {
+      // Se não houver endereço, compartilha diretamente
+      performShare(false);
     }
   };
 
@@ -126,6 +158,18 @@ export default function Employes() {
     }
   };
 
+  const handlePress = (item) => {
+    if (selectionMode) {
+      const newSelectedItems = selectedItems.includes(item.id)
+        ? selectedItems.filter(id => id !== item.id)
+        : [...selectedItems, item.id];
+
+      setSelectedItems(newSelectedItems);
+
+      if (newSelectedItems.length === 0) cancelSelection();
+    }
+  };
+
   const cancelSelection = () => {
     setSelectionMode(false);
     setSelectedItems([]);
@@ -134,6 +178,16 @@ export default function Employes() {
   const handleMultiShare = async () => {
     if (selectedItems.length === 0) return;
 
+    const initialOptions = {};
+    lista.filter(f => selectedItems.includes(f.id)).forEach(f => {
+      // Por padrão, inclui o endereço se ele existir
+      initialOptions[f.id] = !!f.endereco;
+    });
+    setShareOptions(initialOptions);
+    setMultiShareModalVisible(true);
+  };
+
+  const performFinalMultiShare = async () => {
     const funcionariosSelecionados = lista.filter(f => selectedItems.includes(f.id));
 
     let message = '*Lista de Funcionários*\n\n';
@@ -142,16 +196,21 @@ export default function Employes() {
       message += `   - RE: ${item.re}\n`;
       message += `   - Setor: ${item.setor}\n`;
       message += `   - Turno: ${item.turno}\n`;
-      message += `   - Telefone: ${item.telefone}\n\n`;
+      message += `   - Telefone: ${item.telefone}\n`;
+      // Verifica a opção individual para cada funcionário
+      if (shareOptions[item.id] && item.endereco) {
+        message += `   - Endereço: ${item.endereco}\n`;
+      }
+      message += '\n';
     });
 
     const url = `whatsapp://send?text=${encodeURIComponent(message)}`;
-
     try {
       await Linking.openURL(url);
     } catch (error) {
       setAlertInfo({ visible: true, type: 'error', title: 'Erro', message: 'Não foi possível abrir o WhatsApp.', buttons: [{ text: 'OK' }] });
     } finally {
+      setMultiShareModalVisible(false);
       cancelSelection();
     }
   };
@@ -233,6 +292,7 @@ export default function Employes() {
           <CardEmployes
             data={filtrados}
             onLongPress={handleLongPress}
+            onPress={handlePress}
             onEdit={(item) => navigation.navigate('AddEditEmployee', { employeeId: item.id })} // Para o menu de 3 pontos
             onDelete={excluir}
             onShare={handleShare}
@@ -242,6 +302,59 @@ export default function Employes() {
 
         )}
       </KeyboardAvoidingView>
+
+      {/* Modal para configurar compartilhamento múltiplo */}
+      <Modal
+        visible={multiShareModalVisible}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setMultiShareModalVisible(false)}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <TouchableOpacity style={styles.closeButton} onPress={() => setMultiShareModalVisible(false)}>
+              <Ionicons name="close" size={26} color="#666" />
+            </TouchableOpacity>
+            <Text style={styles.modalTitle}>Configurar Compartilhamento</Text>
+            <Text style={{ textAlign: 'center', color: '#666', marginBottom: 20 }}>
+              Selecione para quais funcionários deseja incluir o endereço.
+            </Text>
+
+            {lista.filter(f => selectedItems.includes(f.id)).map(item => (
+              <View key={item.id} style={styles.shareOptionRow}>
+                <Text style={styles.shareOptionName}>{item.nome}</Text>
+                {item.endereco ? (
+                  <Switch
+                    trackColor={{ false: '#767577', true: '#81b0ff' }}
+                    thumbColor={shareOptions[item.id] ? '#007bff' : '#f4f3f4'}
+                    ios_backgroundColor="#3e3e3e"
+                    onValueChange={() =>
+                      setShareOptions(prev => ({
+                        ...prev,
+                        [item.id]: !prev[item.id],
+                      }))
+                    }
+                    value={shareOptions[item.id]}
+                  />
+                ) : (
+                  <Text style={styles.noAddressText}>Sem endereço</Text>
+                )}
+              </View>
+            ))}
+
+            <View style={styles.modalActions}>
+              <TouchableOpacity style={[styles.btn, styles.btnCancel]} onPress={() => setMultiShareModalVisible(false)}>
+                <Text style={styles.btnText}>Cancelar</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={[styles.btn, styles.btnSave]} onPress={performFinalMultiShare}>
+                <Text style={[styles.btnText, { color: '#fff' }]}>Compartilhar</Text>
+              </TouchableOpacity>
+            </View>
+
+          </View>
+        </View>
+      </Modal>
+
 
       <CustomAlert {...alertInfo} onClose={() => setAlertInfo({ visible: false })} />
     </View>

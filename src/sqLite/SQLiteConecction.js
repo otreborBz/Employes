@@ -13,7 +13,8 @@ export const createTable = async () => {
         re TEXT,
         setor TEXT,
         turno TEXT,
-        telefone TEXT
+        telefone TEXT,
+        endereco TEXT
       );`
   );
 
@@ -28,14 +29,18 @@ export const createTable = async () => {
     await db.execAsync('ALTER TABLE funcionarios ADD COLUMN telefone TEXT;');
     console.log('✅ Coluna "telefone" adicionada à tabela.');
   }
+  if (!columns.some(c => c.name === 'endereco')) {
+    await db.execAsync('ALTER TABLE funcionarios ADD COLUMN endereco TEXT;');
+    console.log('✅ Coluna "endereco" adicionada à tabela.');
+  }
 };
 
 // inserir um funcionário
-export const addFuncionario = async (nome, re, setor, turno, telefone) => {
+export const addFuncionario = async (nome, re, setor, turno, telefone, endereco) => {
   const db = await dbPromise;
   const result = await db.runAsync(
-    'INSERT INTO funcionarios (nome, re, setor, turno, telefone) VALUES (?, ?, ?, ?, ?);',
-    [nome.toUpperCase(), re, setor.toUpperCase(), turno, telefone]
+    'INSERT INTO funcionarios (nome, re, setor, turno, telefone, endereco) VALUES (?, ?, ?, ?, ?, ?);',
+    [nome.toUpperCase(), re, setor.toUpperCase(), turno, telefone, endereco]
   );
   console.log('✅ Inserido com sucesso, ID:', result.lastInsertRowId);
 };
@@ -62,10 +67,10 @@ export const deleteFuncionario = async id => {
 };
 
 // atualizar um funcionário
-export const updateFuncionario = async (id, nome, re, setor, turno, telefone) => {
+export const updateFuncionario = async (id, nome, re, setor, turno, telefone, endereco) => {
   const db = await dbPromise;
-  const result = await db.runAsync('UPDATE funcionarios SET nome = ?, re = ?, setor = ?, turno = ?, telefone = ? WHERE id = ?;', [
-    nome.toUpperCase(), re, setor.toUpperCase(), turno, telefone, id
+  const result = await db.runAsync('UPDATE funcionarios SET nome = ?, re = ?, setor = ?, turno = ?, telefone = ?, endereco = ? WHERE id = ?;', [
+    nome.toUpperCase(), re, setor.toUpperCase(), turno, telefone, endereco, id
   ]);
   console.log(`✅ Funcionário com ID ${id} atualizado. Linhas afetadas: ${result.changes}`);
 };

@@ -1,152 +1,132 @@
-// src/components/CardEmployes.js
 import { Ionicons } from '@expo/vector-icons';
 import { useState } from 'react';
-import { FlatList, Modal, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, LayoutAnimation, Modal, Platform, Text, TouchableOpacity, UIManager, View } from 'react-native';
 import styles from './styles';
 
-// Subcomponente para cada item da lista, com seu próprio modal
-function CardItem({ item, onShare, onEdit, onDelete, onLongPress, isSelected, selectionMode }) {
-  const [modalVisible, setModalVisible] = useState(false);
+// Habilita LayoutAnimation no Android
+if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
+  UIManager.setLayoutAnimationEnabledExperimental(true);
+}
+
+/**
+ * Componente para renderizar um único card de funcionário.
+ * Gerencia o estado de visibilidade do endereço.
+ */
+const EmployeeCardItem = ({ item, onLongPress, onPress, onEdit, onDelete, onShare, selectionMode, selectedItems }) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [menuVisible, setMenuVisible] = useState(false);
+
+  const toggleExpand = () => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    setIsExpanded(!isExpanded);
+  };
+
+  const isSelected = selectedItems.includes(item.id);
 
   return (
     <TouchableOpacity
-      style={[styles.itemRow, isSelected && styles.itemSelected]}
+      style={[styles.card, isSelected && styles.cardSelected]}
       onLongPress={() => onLongPress(item)}
-      delayLongPress={200}
+      onPress={() => onPress(item)}
+      activeOpacity={0.8}
     >
-      {selectionMode && (
-        <Ionicons name={isSelected ? "checkbox" : "square-outline"} size={24} color="#007bff" style={{ marginRight: 15 }} />
-      )}
-      <View style={{ flex: 1 }}>
-        <Text style={styles.itemName}>{item.nome}</Text>
-        <Text style={styles.itemDetails}>RE: {item.re} | {item.setor} | Turno: {item.turno} | Tel: {item.telefone}</Text>
+      <View style={styles.cardHeader}>
+        <View style={styles.cardTitleContainer}>
+          <Text style={[styles.cardName, isSelected && styles.cardTextSelected]}>{item.nome}</Text>
+          <Text style={[styles.cardRe, isSelected && styles.cardTextSelected]}>RE: {item.re}</Text>
+        </View>
+        {/* Menu de 3 pontos */}
+        {!selectionMode && (
+          <TouchableOpacity onPress={() => setMenuVisible(true)} style={styles.menuOption}>
+            <Ionicons name="ellipsis-vertical" size={24} color="#555" />
+          </TouchableOpacity>
+        )}
       </View>
 
-      {!selectionMode && (
-        <TouchableOpacity
-          style={{
-            paddingLeft: 10,
-            paddingVertical: 5,
-            justifyContent: 'center',
-          }}
-          onPress={() => setModalVisible(true)}
-        >
-          <Ionicons name="ellipsis-vertical" size={22} color="#555" />
-        </TouchableOpacity>
-      )}
+      <View style={styles.cardBody}>
+        {/* Seção de Detalhes Expansível */}
+        {isExpanded && (
+          <View style={styles.detailsContainer}>
+            <View style={styles.detailRow}>
+              <Ionicons name="business-outline" size={18} color="#555" style={styles.detailIcon} />
+              <Text style={styles.detailText}>Setor: {item.setor}</Text>
+            </View>
+            <View style={styles.detailRow}>
+              <Ionicons name="time-outline" size={18} color="#555" style={styles.detailIcon} />
+              <Text style={styles.detailText}>Turno: {item.turno}</Text>
+            </View>
+            <View style={styles.detailRow}>
+              <Ionicons name="call-outline" size={18} color="#555" style={styles.detailIcon} />
+              <Text style={styles.detailText}>Telefone: {item.telefone}</Text>
+            </View>
+            {item.endereco && (
+              <View style={styles.detailRow}>
+                <Ionicons name="location-outline" size={18} color="#555" style={styles.detailIcon} />
+                <Text style={styles.detailText}>Endereço: {item.endereco}</Text>
+              </View>
+            )}
+          </View>
+        )}
 
+        <TouchableOpacity onPress={toggleExpand} style={styles.expandButton}>
+          <Text style={styles.expandButtonText}>{isExpanded ? 'Ocultar Detalhes' : 'Ver Detalhes'}</Text>
+          <Ionicons name={isExpanded ? 'chevron-up-outline' : 'chevron-down-outline'} size={18} color="#007bff" />
+        </TouchableOpacity>
+      </View>
+
+      {/* Modal de Ações */}
       <Modal
-        visible={modalVisible}
+        visible={menuVisible}
         transparent
         animationType="fade"
-        onRequestClose={() => setModalVisible(false)}
+        onRequestClose={() => setMenuVisible(false)}
       >
-        <TouchableOpacity
-          style={{
-            flex: 1,
-            backgroundColor: 'rgba(0, 0, 0, 0.5)',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-          activeOpacity={1}
-          onPressOut={() => setModalVisible(false)}
-        >
-          <View
-            style={{
-              backgroundColor: '#fff',
-              borderRadius: 12,
-              padding: 10,
-              width: '70%',
-              elevation: 5,
-              shadowColor: '#000',
-              shadowOffset: { width: 0, height: 2 },
-              shadowOpacity: 0.25,
-              shadowRadius: 3.84,
-            }}
-          >
-            <TouchableOpacity
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                paddingVertical: 15,
-                paddingHorizontal: 10,
-                borderBottomWidth: 1,
-                borderBottomColor: '#f0f0f0',
-              }}
-              onPress={() => { setModalVisible(false); onShare(item); }}
-            >
+        <TouchableOpacity style={styles.modalOverlay} activeOpacity={1} onPressOut={() => setMenuVisible(false)}>
+          <View style={styles.modalContent}>
+            <TouchableOpacity style={styles.modalOption} onPress={() => { setMenuVisible(false); onShare(item); }}>
               <Ionicons name="share-social-outline" size={22} color="#28a745" />
-              <Text style={{
-                marginLeft: 15,
-                fontSize: 16,
-                color: '#333',
-                fontWeight: '500',
-              }}>Compartilhar</Text>
+              <Text style={styles.modalOptionText}>Compartilhar</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                paddingVertical: 15,
-                paddingHorizontal: 10,
-                borderBottomWidth: 1,
-                borderBottomColor: '#f0f0f0',
-              }}
-              onPress={() => { setModalVisible(false); onEdit(item); }}
-            >
+            <TouchableOpacity style={styles.modalOption} onPress={() => { setMenuVisible(false); onEdit(item); }}>
               <Ionicons name="create-outline" size={22} color="#007bff" />
-              <Text style={{
-                marginLeft: 15,
-                fontSize: 16,
-                color: '#333',
-                fontWeight: '500',
-              }}>Editar</Text>
+              <Text style={styles.modalOptionText}>Editar</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                paddingVertical: 15,
-                paddingHorizontal: 10,
-              }}
-              onPress={() => { setModalVisible(false); onDelete(item); }}
+              style={[styles.modalOption, { borderBottomWidth: 0 }]}
+              onPress={() => { setMenuVisible(false); onDelete(item); }}
             >
               <Ionicons name="trash-outline" size={22} color="#dc3545" />
-              <Text style={{
-                marginLeft: 15,
-                fontSize: 16,
-                color: '#dc3545',
-                fontWeight: '500',
-              }}>Excluir</Text>
+              <Text style={[styles.modalOptionText, { color: '#dc3545' }]}>Excluir</Text>
             </TouchableOpacity>
           </View>
         </TouchableOpacity>
       </Modal>
     </TouchableOpacity>
   );
-}
+};
 
-export default function CardEmployes({ data, onShare, onEdit, onDelete, onLongPress, selectionMode, selectedItems }) {
+/**
+ * Componente principal que renderiza a lista de funcionários.
+ */
+const CardEmployes = ({ data, ...props }) => {
+  const renderItem = ({ item }) => (
+    <EmployeeCardItem
+      item={item}
+      {...props}
+    />
+  );
 
   return (
     <FlatList
       data={data}
+      renderItem={renderItem}
       keyExtractor={(item) => item.id.toString()}
-      renderItem={({ item }) => (
-        <CardItem
-          item={item}
-          isSelected={selectedItems.includes(item.id)}
-          selectionMode={selectionMode}
-          onShare={onShare}
-          onEdit={onEdit}
-          onDelete={onDelete}
-          onLongPress={onLongPress}
-        />
-      )}
-      contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: 80 }}
+      contentContainerStyle={{ paddingHorizontal: 15, paddingTop: 10, paddingBottom: 20 }}
       showsVerticalScrollIndicator={false}
     />
   );
-}
+};
+
+export default CardEmployes;
