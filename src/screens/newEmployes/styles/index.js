@@ -17,9 +17,9 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    gap: 15,
+    gap: 5,
   },
-  input: { height: 50, backgroundColor: '#fff', borderWidth: 1, borderColor: '#ddd', borderRadius: 8, paddingHorizontal: 15, fontSize: 16, marginBottom: 20 },
+  input: { height: 50, backgroundColor: '#fff', borderWidth: 1, borderColor: '#ddd', borderRadius: 8, paddingHorizontal: 15, fontSize: 12, marginBottom: 20 },
   selector: {
     height: 50,
     backgroundColor: '#fff',
@@ -32,8 +32,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between'
   },
-  selectorText: { fontSize: 16, color: '#333' },
-  selectorPlaceholder: { fontSize: 16, color: '#888' },
+  selectorText: { 
+    fontSize: 12, 
+    color: '#333'
+   },
+  selectorPlaceholder: { fontSize: 12, color: '#888' },
   footer: {
     flexDirection: 'row',
     justifyContent: 'center',

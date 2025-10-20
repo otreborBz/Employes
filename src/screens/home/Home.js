@@ -734,6 +734,13 @@ export default function Home() {
                   </View>
                 </View>
                 <View style={styles.detailRow}>
+                  <Ionicons name="time-outline" size={26} color="#007BFF" style={styles.detailIcon} />
+                  <View>
+                    <Text style={styles.detailLabel}>Turno</Text>
+                    <Text style={styles.detailValue}>{funcionarios[funcionarios.length - 1].turno}</Text>
+                  </View>
+                </View>
+                <View style={styles.detailRow}>
                   <Ionicons name="call-outline" size={26} color="#007BFF" style={styles.detailIcon} />
                   <View><Text style={styles.detailLabel}>Telefone</Text>
                     <Text style={styles.detailValue}>{funcionarios[funcionarios.length - 1].telefone}</Text>
@@ -745,13 +752,7 @@ export default function Home() {
                     <View><Text style={styles.detailLabel}>Endereço</Text><Text style={styles.detailValue}>{funcionarios[funcionarios.length - 1].endereco}</Text></View>
                   </View>
                 )}
-                <View style={styles.detailRow}>
-                  <Ionicons name="time-outline" size={26} color="#007BFF" style={styles.detailIcon} />
-                  <View>
-                    <Text style={styles.detailLabel}>Nome</Text>
-                    <Text style={styles.detailValue}>{funcionarios[funcionarios.length - 1].turno}</Text>
-                  </View>
-                </View>
+
               </View>
               <TouchableOpacity style={[styles.modalButton, { backgroundColor: '#25D366' }]} onPress={() => handleShare(funcionarios[funcionarios.length - 1])}>
                 <Ionicons name="logo-whatsapp" size={20} color="#fff" style={{ marginRight: 8 }} />

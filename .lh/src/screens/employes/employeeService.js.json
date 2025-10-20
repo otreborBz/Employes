@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/screens/employes/employeeService.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1761000343455,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1761000343455,
+            "name": "Commit-0",
+            "content": "import * as SQLite from 'expo-sqlite';\n\n/**\n * Abre ou cria o banco de dados.\n * @returns {SQLite.WebSQLDatabase}\n */\nfunction openDb() {\n  return SQLite.openDatabase('empresa.db');\n}\n\nconst db = openDb();\n\n/**\n * Executa uma transação no banco de dados de forma assíncrona.\n * @param {string} sqlStatement - A instrução SQL a ser executada.\n * @param {Array<string|number>} args - Os argumentos para a instrução SQL.\n * @returns {Promise<SQLite.SQLResultSet>}\n */\nconst executeSql = (sqlStatement, args = []) => {\n  return new Promise((resolve, reject) => {\n    db.transaction(tx => {\n      tx.executeSql(\n        sqlStatement,\n        args,\n        (_, result) => resolve(result),\n        (_, error) => {\n          reject(error);\n          return false; // Para parar a transação\n        }\n      );\n    });\n  });\n};\n\nexport const createTable = async () => {\n  // Adicionado 'turno TEXT', 'telefone TEXT', 'endereco TEXT'\n  const query = `\n    CREATE TABLE IF NOT EXISTS funcionarios (\n      id INTEGER PRIMARY KEY AUTOINCREMENT,\n      nome TEXT NOT NULL,\n      re TEXT NOT NULL,\n      setor TEXT NOT NULL,\n      turno TEXT NOT NULL,\n      telefone TEXT,\n      endereco TEXT\n    );`;\n  return await executeSql(query);\n};\n\nexport const addFuncionario = async (nome, re, setor, turno, telefone, endereco) => {\n  const query = 'INSERT INTO funcionarios (nome, re, setor, turno, telefone, endereco) VALUES (?, ?, ?, ?, ?, ?);';\n  return await executeSql(query, [nome, re, setor, turno, telefone, endereco]);\n};\n\nexport const updateFuncionario = async (id, nome, re, setor, turno, telefone, endereco) => {\n  const query = 'UPDATE funcionarios SET nome = ?, re = ?, setor = ?, turno = ?, telefone = ?, endereco = ? WHERE id = ?;';\n  return await executeSql(query, [nome, re, setor, turno, telefone, endereco, id]);\n};\n\nexport const deleteFuncionario = async (id) => {\n  const query = 'DELETE FROM funcionarios WHERE id = ?;';\n  return await executeSql(query, [id]);\n};\n\nexport const getFuncionarios = async () => {\n  const result = await executeSql('SELECT * FROM funcionarios ORDER BY nome ASC;');\n  return result.rows._array;\n};\n\nexport const getFuncionarioById = async (id) => {\n  const result = await executeSql('SELECT * FROM funcionarios WHERE id = ?;', [id]);\n  return result.rows.length > 0 ? result.rows.item(0) : null;\n};\n\nexport const clearFuncionarios = async () => {\n  return await executeSql('DELETE FROM funcionarios;');\n};\n\n// Inicializa a tabela ao carregar o módulo\ncreateTable().catch(error => console.error(\"Erro ao inicializar o banco de dados:\", error));"
+        }
+    ]
+}
