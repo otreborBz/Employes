@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import Constants from 'expo-constants';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import UpdateModal from '@/components/updateModal/UpdateModal';
 
 export default function useCheckUpdate() {
@@ -8,24 +9,25 @@ export default function useCheckUpdate() {
   useEffect(() => {
     async function checkForUpdate() {
       try {
-        const response = await fetch('https://raw.githubusercontent.com/otreborBz/employees-update/refs/heads/main/update.json');
+        // URL que contém as informações da nova versão
+        const response = await fetch('https://seu-servidor.com/update.json');
         const data = await response.json();
 
-        const localVersion = Constants.expoConfig.version;
-        const remoteVersion = data.latestVersion;
+        const currentVersion = Constants.expoConfig.version;
+        const latestVersion = data.version;
 
-        console.log('Local Version:', localVersion);
-        console.log('Remote Version:', remoteVersion);
+        if (latestVersion !== currentVersion) {
+          // Verifica se o usuário adiou recentemente
+          const lastRemindTime = await AsyncStorage.getItem('lastRemindTime');
 
+          if (lastRemindTime) {
+            const lastRemind = new Date(Number(lastRemindTime));
+            const now = new Date();
 
+            const hoursDiff = (now.getTime() - lastRemind.getTime()) / 1000 / 60 / 60;
+          }
 
-
-        if (isNewerVersion(remoteVersion, localVersion)) {
-          setUpdateInfo({
-            changelog: data.updateMessage,
-            version: remoteVersion,
-            apkUrl: data.downloadUrl,
-          });
+          setUpdateInfo(data);
         }
       } catch (error) {
         console.log('Erro ao verificar atualização:', error);
@@ -35,25 +37,23 @@ export default function useCheckUpdate() {
     checkForUpdate();
   }, []);
 
-  return (
-    updateInfo && (
-      <UpdateModal
-        visible={true}
-        changelog={updateInfo.changelog}
-        version={updateInfo.version}
-        apkUrl={updateInfo.apkUrl}
-        onClose={() => setUpdateInfo(null)}
-      />
-    )
-  );
-}
-
-function isNewerVersion(remote, local) {
-  const r = remote.split('.').map(Number);
-  const l = local.split('.').map(Number);
-  for (let i = 0; i < r.length; i++) {
-    if (r[i] > (l[i] || 0)) return true;
-    if (r[i] < (l[i] || 0)) return false;
+  async function handleRemindLater() {
+    await AsyncStorage.setItem('lastRemindTime', Date.now().toString());
+    setUpdateInfo(null);
   }
-  return false;
+
+  return (
+    <>
+      {updateInfo && (
+        <UpdateModal
+          visible={true}
+          onUpdate={() => {
+            // ação de atualizar (abrir link, etc)
+            setUpdateInfo(null);
+          }}
+          onRemindLater={handleRemindLater}
+        />
+      )}
+    </>
+  );
 }
